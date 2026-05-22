@@ -10,22 +10,22 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,200;9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@300;400;500;700&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0b0e14;
-    --bg-elevated: #131720;
+    --bg: #181d27;
+    --bg-elevated: #232938;
+    --bg-input: #131722;
     --ink: #f0e6d2;
-    --ink-dim: #7d7560;
+    --ink-dim: #8c8472;
     --accent: #d4a456;
     --accent-bright: #e8c178;
     --accent-deep: #8a6a35;
-    --line: rgba(212, 164, 86, 0.18);
-    --line-strong: rgba(212, 164, 86, 0.4);
+    --line: rgba(212, 164, 86, 0.22);
+    --line-strong: rgba(212, 164, 86, 0.45);
     --serif: 'Fraunces', serif;
     --serif-he: 'Frank Ruhl Libre', serif;
     --mono: 'JetBrains Mono', monospace;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
   html, body { min-height: 100%; }
 
   body {
@@ -35,8 +35,8 @@
     font-size: 16px;
     line-height: 1.5;
     background-image:
-      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(212, 164, 86, 0.08) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 40% at 50% 100%, rgba(212, 164, 86, 0.04) 0%, transparent 60%);
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(212, 164, 86, 0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 50% 100%, rgba(212, 164, 86, 0.05) 0%, transparent 60%);
     position: relative;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
@@ -48,8 +48,8 @@
     inset: 0;
     pointer-events: none;
     background-image:
-      linear-gradient(rgba(212, 164, 86, 0.022) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(212, 164, 86, 0.022) 1px, transparent 1px);
+      linear-gradient(rgba(212, 164, 86, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212, 164, 86, 0.025) 1px, transparent 1px);
     background-size: 64px 64px;
     z-index: 0;
     mask-image: radial-gradient(ellipse at center, black 30%, transparent 90%);
@@ -66,7 +66,7 @@
   header {
     border-bottom: 1px solid var(--line);
     padding-bottom: 14px;
-    margin-bottom: 40px;
+    margin-bottom: 36px;
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -91,9 +91,9 @@
     letter-spacing: 0.04em;
   }
 
-  /* main hero */
+  /* hero */
   .today {
-    margin: 56px 0 40px;
+    margin: 40px 0 24px;
     text-align: center;
     position: relative;
   }
@@ -107,8 +107,7 @@
     height: 1px;
     background: var(--accent);
   }
-  .today::before { top: -28px; }
-  .today::after { bottom: -28px; }
+  .today::before { top: -20px; }
 
   .today-label {
     font-family: var(--mono);
@@ -116,7 +115,30 @@
     letter-spacing: 0.32em;
     color: var(--ink-dim);
     text-transform: uppercase;
-    margin-bottom: 24px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .today-label .live-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+
+  .today-label.viewing .live-dot {
+    background: var(--ink-dim);
+    box-shadow: none;
+    animation: none;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
   }
 
   .today-month {
@@ -175,8 +197,75 @@
     font-weight: 400;
     font-size: 17px;
     color: var(--accent-bright);
-    margin-top: 22px;
+    margin-top: 20px;
     letter-spacing: 0.03em;
+  }
+
+  /* navigation controls */
+  .nav-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .nav-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: var(--serif-he);
+    font-size: 13px;
+    padding: 9px 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 38px;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent-bright);
+    background: rgba(212, 164, 86, 0.06);
+  }
+
+  .nav-btn:active {
+    transform: translateY(1px);
+  }
+
+  .nav-btn .chev {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--ink-dim);
+    line-height: 1;
+  }
+
+  .nav-btn:hover .chev { color: var(--accent); }
+
+  .nav-btn.today-btn {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+    font-weight: 500;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 9px 16px;
+  }
+
+  .nav-btn.today-btn:hover {
+    background: var(--accent-bright);
+    color: var(--bg);
+  }
+
+  .nav-btn.today-btn.hidden {
+    visibility: hidden;
+    pointer-events: none;
   }
 
   /* divider */
@@ -184,7 +273,7 @@
     display: flex;
     align-items: center;
     gap: 18px;
-    margin: 44px 0 24px;
+    margin: 40px 0 22px;
   }
 
   .divider::before, .divider::after {
@@ -208,7 +297,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 14px;
-    margin-bottom: 40px;
+    margin-bottom: 36px;
   }
 
   .equiv-card {
@@ -269,7 +358,7 @@
     background: var(--bg-elevated);
     border: 1px solid var(--line);
     padding: 22px;
-    margin-bottom: 40px;
+    margin-bottom: 36px;
     position: relative;
   }
 
@@ -287,10 +376,11 @@
   .month-grid-header {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
     margin-bottom: 14px;
     padding-bottom: 12px;
     border-bottom: 1px solid var(--line);
+    gap: 8px;
   }
 
   .month-grid-title {
@@ -316,6 +406,33 @@
     letter-spacing: 0.18em;
   }
 
+  .month-nav {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .mini-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink-dim);
+    font-family: var(--mono);
+    font-size: 12px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .mini-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
   .weekdays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -333,9 +450,7 @@
     text-transform: uppercase;
   }
 
-  .weekday.shabbat {
-    color: var(--accent-deep);
-  }
+  .weekday.shabbat { color: var(--accent-deep); }
 
   .days {
     display: grid;
@@ -350,28 +465,35 @@
     padding: 12px 0;
     color: var(--ink);
     border: 1px solid transparent;
-    transition: all 0.2s;
-    background: rgba(255, 255, 255, 0.01);
+    transition: all 0.15s;
+    background: rgba(255, 255, 255, 0.015);
+    cursor: pointer;
+  }
+
+  .day:hover {
+    border-color: var(--line-strong);
+    background: rgba(212, 164, 86, 0.04);
   }
 
   .day.current {
     border-color: var(--accent);
     color: var(--accent-bright);
-    background: rgba(212, 164, 86, 0.08);
+    background: rgba(212, 164, 86, 0.10);
     font-weight: 600;
-    position: relative;
   }
 
-  .day.shabbat {
-    color: var(--accent-deep);
+  .day.is-today-real {
+    box-shadow: inset 0 0 0 1px var(--accent);
   }
+
+  .day.shabbat { color: var(--accent-deep); }
 
   /* year overview */
   .year-overview {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
     gap: 6px;
-    margin-bottom: 40px;
+    margin-bottom: 36px;
   }
 
   .month-tile {
@@ -379,12 +501,17 @@
     border: 1px solid var(--line);
     padding: 14px 6px 12px;
     text-align: center;
-    transition: all 0.2s;
+    transition: all 0.15s;
+    cursor: pointer;
+  }
+
+  .month-tile:hover {
+    border-color: var(--line-strong);
   }
 
   .month-tile.current {
     border-color: var(--accent);
-    background: rgba(212, 164, 86, 0.08);
+    background: rgba(212, 164, 86, 0.10);
   }
 
   .month-tile-num {
@@ -406,9 +533,7 @@
     color: var(--accent-bright);
   }
 
-  .month-tile.sol {
-    border-style: dashed;
-  }
+  .month-tile.sol { border-style: dashed; }
 
   /* converter */
   .converter {
@@ -457,7 +582,7 @@
   }
 
   .converter input[type="date"] {
-    background: var(--bg);
+    background: var(--bg-input);
     border: 1px solid var(--line);
     color: var(--ink);
     font-family: var(--mono);
@@ -470,9 +595,7 @@
     text-align: left;
   }
 
-  .converter input[type="date"]:focus {
-    border-color: var(--accent);
-  }
+  .converter input[type="date"]:focus { border-color: var(--accent); }
 
   .converter-result {
     margin-top: 16px;
@@ -485,7 +608,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 8px 0;
-    border-bottom: 1px dotted rgba(212, 164, 86, 0.08);
+    border-bottom: 1px dotted rgba(212, 164, 86, 0.10);
   }
 
   .converter-result-row:last-child { border-bottom: none; }
@@ -514,7 +637,7 @@
   /* footer */
   footer {
     text-align: center;
-    margin-top: 56px;
+    margin-top: 48px;
     padding-top: 28px;
     border-top: 1px solid var(--line);
   }
@@ -542,13 +665,13 @@
     margin-inline: auto;
   }
 
-  /* responsive */
   @media (max-width: 540px) {
     .equivalents { grid-template-columns: 1fr; }
     .day { font-size: 12px; padding: 10px 0; }
     .weekday { font-size: 9px; }
     .month-grid-title { font-size: 18px; }
     .month-grid-title .he { font-size: 14px; }
+    .nav-btn { font-size: 12px; padding: 8px 11px; }
   }
 
   @keyframes fadeIn {
@@ -573,12 +696,31 @@
   </header>
 
   <section class="today fade-2">
-    <div class="today-label">TODAY · היום</div>
+    <div class="today-label" id="todayLabel">
+      <span class="live-dot"></span>
+      <span id="todayLabelText">TODAY · היום</span>
+    </div>
     <div class="today-month" id="todayMonth">—</div>
     <div class="today-month-he" id="todayMonthHe"></div>
     <div class="today-day" id="todayDay">—</div>
     <div class="today-year"><span class="he-label">HE</span><span id="todayYear">—</span></div>
     <div class="today-weekday" id="todayWeekday">—</div>
+
+    <div class="nav-controls">
+      <button class="nav-btn" onclick="navigate('month', -1)" title="חודש אחורה">
+        <span class="chev">‹‹</span><span>חודש</span>
+      </button>
+      <button class="nav-btn" onclick="navigate('day', -1)" title="יום אחורה">
+        <span class="chev">‹</span><span>יום</span>
+      </button>
+      <button class="nav-btn today-btn hidden" id="todayBtn" onclick="goToToday()">היום</button>
+      <button class="nav-btn" onclick="navigate('day', 1)" title="יום קדימה">
+        <span>יום</span><span class="chev">›</span>
+      </button>
+      <button class="nav-btn" onclick="navigate('month', 1)" title="חודש קדימה">
+        <span>חודש</span><span class="chev">››</span>
+      </button>
+    </div>
   </section>
 
   <div class="divider fade-3"><span>EQUIVALENTS · מקבילות</span></div>
@@ -597,7 +739,11 @@
   <section class="month-grid fade-4">
     <div class="month-grid-header">
       <div class="month-grid-title" id="monthGridTitle">—</div>
-      <div class="month-grid-num" id="monthGridNum">—</div>
+      <div class="month-nav">
+        <button class="mini-btn" onclick="navigate('month', -1)" title="חודש קודם">‹</button>
+        <div class="month-grid-num" id="monthGridNum">—</div>
+        <button class="mini-btn" onclick="navigate('month', 1)" title="חודש הבא">›</button>
+      </div>
     </div>
     <div class="weekdays">
       <div class="weekday">Sun</div>
@@ -638,10 +784,10 @@
   const MONTHS_HE = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','סול','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
   const WEEKDAYS_HE = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
 
-  // Per user choice: simple Julian-style rule, every 4 years
-  function isLeapYear(gregYear) {
-    return gregYear % 4 === 0;
-  }
+  let viewedDate = new Date();
+  viewedDate.setHours(12, 0, 0, 0); // noon to avoid DST surprises
+
+  function isLeapYear(y) { return y % 4 === 0; }
 
   function dayOfYear(date) {
     const start = Date.UTC(date.getFullYear(), 0, 1);
@@ -656,23 +802,25 @@
     const leap = isLeapYear(gregYear);
     const yearLength = leap ? 366 : 365;
 
-    // Year Day = last day of year (outside week & month)
-    if (doy === yearLength) {
-      return { year: ifcYear, monthIndex: null, day: null, special: 'year' };
-    }
-
-    // Leap Day = day 169 in leap year (between Jun 28 and Sol 1)
-    if (leap && doy === 169) {
-      return { year: ifcYear, monthIndex: null, day: null, special: 'leap' };
-    }
+    if (doy === yearLength) return { year: ifcYear, monthIndex: null, day: null, special: 'year' };
+    if (leap && doy === 169) return { year: ifcYear, monthIndex: null, day: null, special: 'leap' };
 
     let adjusted = doy;
     if (leap && doy > 169) adjusted -= 1;
 
     const monthIndex = Math.floor((adjusted - 1) / 28);
     const day = ((adjusted - 1) % 28) + 1;
-
     return { year: ifcYear, monthIndex, day, special: null };
+  }
+
+  function ifcToGreg(ifcYear, monthIndex, day) {
+    const gregYear = ifcYear - 10000;
+    const leap = isLeapYear(gregYear);
+    let doy = monthIndex * 28 + day;
+    if (leap && monthIndex >= 6) doy += 1; // skip past leap day insertion
+    const d = new Date(gregYear, 0, doy);
+    d.setHours(12, 0, 0, 0);
+    return d;
   }
 
   function getHebrewDate(date) {
@@ -680,9 +828,7 @@
       return new Intl.DateTimeFormat('he-u-ca-hebrew', {
         day: 'numeric', month: 'long', year: 'numeric'
       }).format(date);
-    } catch (e) {
-      return '—';
-    }
+    } catch (e) { return '—'; }
   }
 
   function getGregorianFormatted(date) {
@@ -691,24 +837,79 @@
     }).format(date);
   }
 
-  // IFC weekday: day 1 of every month = Sunday (index 0)
-  function weekdayIndexFromDay(day) {
-    return (day - 1) % 7;
+  function weekdayName(day) { return WEEKDAYS_HE[(day - 1) % 7]; }
+  function weekdayIndex(day) { return (day - 1) % 7; }
+
+  function isSameDay(a, b) {
+    return a.getFullYear() === b.getFullYear() &&
+           a.getMonth() === b.getMonth() &&
+           a.getDate() === b.getDate();
   }
 
-  function weekdayName(day) {
-    return WEEKDAYS_HE[weekdayIndexFromDay(day)];
+  function navigate(unit, direction) {
+    const ifc = gregToIFC(viewedDate);
+
+    if (unit === 'day') {
+      const d = new Date(viewedDate);
+      d.setDate(d.getDate() + direction);
+      viewedDate = d;
+    } else if (unit === 'month') {
+      if (ifc.special) {
+        // from special day, approximate ±28 days
+        const d = new Date(viewedDate);
+        d.setDate(d.getDate() + direction * 28);
+        viewedDate = d;
+      } else {
+        let targetMonth = ifc.monthIndex + direction;
+        let targetYear = ifc.year;
+        let targetDay = ifc.day;
+        if (targetMonth > 12) { targetMonth = 0; targetYear += 1; }
+        if (targetMonth < 0) { targetMonth = 12; targetYear -= 1; }
+        viewedDate = ifcToGreg(targetYear, targetMonth, targetDay);
+      }
+    }
+    render();
   }
 
-  function renderToday() {
+  function goToToday() {
+    viewedDate = new Date();
+    viewedDate.setHours(12, 0, 0, 0);
+    render();
+  }
+
+  function jumpToDate(date) {
+    viewedDate = new Date(date);
+    viewedDate.setHours(12, 0, 0, 0);
+    render();
+  }
+
+  function render() {
+    const ifc = gregToIFC(viewedDate);
     const now = new Date();
-    const ifc = gregToIFC(now);
+    const isToday = isSameDay(viewedDate, now);
+    const realToday = gregToIFC(now);
+
+    // hero label
+    const labelEl = document.getElementById('todayLabel');
+    const labelTextEl = document.getElementById('todayLabelText');
+    if (isToday) {
+      labelEl.classList.remove('viewing');
+      labelTextEl.textContent = 'TODAY · היום';
+    } else {
+      labelEl.classList.add('viewing');
+      labelTextEl.textContent = 'VIEWING · בתצוגה';
+    }
+
+    // today button
+    document.getElementById('todayBtn').classList.toggle('hidden', isToday);
 
     const monthEl = document.getElementById('todayMonth');
     const monthHeEl = document.getElementById('todayMonthHe');
     const dayEl = document.getElementById('todayDay');
     const yearEl = document.getElementById('todayYear');
     const wdEl = document.getElementById('todayWeekday');
+
+    dayEl.classList.remove('special');
 
     if (ifc.special === 'year') {
       monthEl.textContent = 'Year Day';
@@ -730,16 +931,16 @@
     }
 
     yearEl.textContent = ifc.year;
-    document.getElementById('footerYear').textContent = ifc.year;
+    document.getElementById('footerYear').textContent = realToday.year;
 
-    document.getElementById('gregDate').textContent = getGregorianFormatted(now);
-    document.getElementById('hebDate').textContent = getHebrewDate(now);
+    document.getElementById('gregDate').textContent = getGregorianFormatted(viewedDate);
+    document.getElementById('hebDate').textContent = getHebrewDate(viewedDate);
 
-    renderMonth(ifc);
+    renderMonth(ifc, realToday);
     renderYearOverview(ifc);
   }
 
-  function renderMonth(ifc) {
+  function renderMonth(ifc, realToday) {
     const titleEl = document.getElementById('monthGridTitle');
     const numEl = document.getElementById('monthGridNum');
     const gridEl = document.getElementById('daysGrid');
@@ -747,22 +948,33 @@
     if (ifc.special) {
       titleEl.innerHTML = (ifc.special === 'year' ? 'Year Day' : 'Leap Day') +
                          ' <span class="he">' + (ifc.special === 'year' ? 'יום השנה' : 'יום העיבור') + '</span>';
-      numEl.textContent = 'INTERCALARY';
+      numEl.textContent = 'INTER';
       gridEl.innerHTML = '<div style="grid-column: 1 / -1; padding: 32px 0; text-align: center; font-family: var(--serif-he); color: var(--ink-dim); font-size: 14px;">יום בודד מחוץ למחזור</div>';
       return;
     }
 
     titleEl.innerHTML = MONTHS_EN[ifc.monthIndex] + ' <span class="he">' + MONTHS_HE[ifc.monthIndex] + '</span>';
-    numEl.textContent = String(ifc.monthIndex + 1).padStart(2, '0') + ' / 13';
+    numEl.textContent = String(ifc.monthIndex + 1).padStart(2, '0') + '/13';
 
     gridEl.innerHTML = '';
     for (let d = 1; d <= 28; d++) {
       const cell = document.createElement('div');
       cell.className = 'day';
-      const wdIdx = weekdayIndexFromDay(d);
-      if (wdIdx === 6) cell.classList.add('shabbat');
+      if (weekdayIndex(d) === 6) cell.classList.add('shabbat');
       if (d === ifc.day) cell.classList.add('current');
+      // mark real "today" if it falls in this viewed month
+      if (!realToday.special &&
+          realToday.year === ifc.year &&
+          realToday.monthIndex === ifc.monthIndex &&
+          realToday.day === d &&
+          d !== ifc.day) {
+        cell.classList.add('is-today-real');
+      }
       cell.textContent = String(d).padStart(2, '0');
+      cell.onclick = () => {
+        const newDate = ifcToGreg(ifc.year, ifc.monthIndex, d);
+        jumpToDate(newDate);
+      };
       gridEl.appendChild(cell);
     }
   }
@@ -773,11 +985,16 @@
     for (let i = 0; i < 13; i++) {
       const tile = document.createElement('div');
       tile.className = 'month-tile';
-      if (ifc.monthIndex === i) tile.classList.add('current');
+      if (!ifc.special && ifc.monthIndex === i) tile.classList.add('current');
       if (i === 6) tile.classList.add('sol');
       tile.innerHTML =
         '<div class="month-tile-num">' + String(i + 1).padStart(2, '0') + '</div>' +
         '<div class="month-tile-name">' + MONTHS_HE[i] + '</div>';
+      tile.onclick = () => {
+        const targetYear = ifc.special ? (ifc.year) : ifc.year;
+        const targetDay = (ifc.special || ifc.day > 28) ? 1 : ifc.day;
+        jumpToDate(ifcToGreg(targetYear, i, targetDay));
+      };
       container.appendChild(tile);
     }
   }
@@ -822,7 +1039,17 @@
     update();
   }
 
-  renderToday();
+  // keyboard nav
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT') return;
+    if (e.key === 'ArrowRight') { navigate('day', -1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft') { navigate('day', 1); e.preventDefault(); }
+    else if (e.key === 'ArrowUp') { navigate('month', -1); e.preventDefault(); }
+    else if (e.key === 'ArrowDown') { navigate('month', 1); e.preventDefault(); }
+    else if (e.key === 't' || e.key === 'T' || e.key === 'ה') { goToToday(); e.preventDefault(); }
+  });
+
+  render();
   setupConverter();
 </script>
 </body>
