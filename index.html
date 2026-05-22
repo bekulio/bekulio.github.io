@@ -1,640 +1,829 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>B. B. Kulangiev — Logarithmic Superfluid Vacuum Research Program</title>
-<meta name="description" content="Research program on emergent gravity, electromagnetism, and cosmology from the logarithmic superfluid vacuum framework.">
-
+<title>לוח השנה ההולוצני · 12026 HE</title>
+<meta name="description" content="לוח השנה ההולוצני — מערכת תאריכים חלופית מבוססת IFC עם 13 חודשים של 28 ימים">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,200;9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@300;400;500;700&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #faf9f7;
-  --text: #1a1a1a;
-  --text-secondary: #555;
-  --accent: #8b2500;
-  --accent-light: #c4522a;
-  --border: #ddd;
-  --card-bg: #fff;
-  --card-shadow: 0 1px 3px rgba(0,0,0,0.06);
-  --tag-gravity: #1a5276;
-  --tag-cosmo: #6c3483;
-  --tag-em: #b7950b;
-  --tag-qm: #117864;
-  --tag-predict: #922b21;
-}
+  :root {
+    --bg: #0b0e14;
+    --bg-elevated: #131720;
+    --ink: #f0e6d2;
+    --ink-dim: #7d7560;
+    --accent: #d4a456;
+    --accent-bright: #e8c178;
+    --accent-deep: #8a6a35;
+    --line: rgba(212, 164, 86, 0.18);
+    --line-strong: rgba(212, 164, 86, 0.4);
+    --serif: 'Fraunces', serif;
+    --serif-he: 'Frank Ruhl Libre', serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-body {
-  font-family: 'Crimson Pro', Georgia, serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.65;
-  font-size: 18px;
-}
+  html, body { min-height: 100%; }
 
-.container {
-  max-width: 820px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif-he);
+    font-size: 16px;
+    line-height: 1.5;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(212, 164, 86, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 50% 100%, rgba(212, 164, 86, 0.04) 0%, transparent 60%);
+    position: relative;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
 
-/* Header */
-header {
-  padding: 60px 0 40px;
-  border-bottom: 1px solid var(--border);
-}
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(212, 164, 86, 0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212, 164, 86, 0.022) 1px, transparent 1px);
+    background-size: 64px 64px;
+    z-index: 0;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 90%);
+  }
 
-header h1 {
-  font-size: 28px;
-  font-weight: 600;
-  letter-spacing: -0.5px;
-  margin-bottom: 6px;
-}
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 28px 22px 56px;
+    position: relative;
+    z-index: 1;
+  }
 
-header .location {
-  color: var(--text-secondary);
-  font-size: 16px;
-  font-style: italic;
-}
+  header {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 14px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
 
-header .tagline {
-  margin-top: 20px;
-  font-size: 19px;
-  line-height: 1.6;
-  color: var(--text);
-}
+  .brand {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 13px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
 
-/* Navigation */
-nav {
-  padding: 16px 0;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  gap: 28px;
-  flex-wrap: wrap;
-}
+  .brand-sub {
+    font-family: var(--serif-he);
+    font-weight: 300;
+    font-size: 13px;
+    color: var(--ink-dim);
+    letter-spacing: 0.04em;
+  }
 
-nav a {
-  color: var(--accent);
-  text-decoration: none;
-  font-size: 15px;
-  font-weight: 400;
-  letter-spacing: 0.3px;
-}
+  /* main hero */
+  .today {
+    margin: 56px 0 40px;
+    text-align: center;
+    position: relative;
+  }
 
-nav a:hover { text-decoration: underline; }
+  .today::before, .today::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+  .today::before { top: -28px; }
+  .today::after { bottom: -28px; }
 
-/* Sections */
-section {
-  padding: 40px 0;
-  border-bottom: 1px solid var(--border);
-}
+  .today-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
 
-section:last-of-type { border-bottom: none; }
+  .today-month {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(26px, 5.5vw, 38px);
+    color: var(--accent);
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+  }
 
-h2 {
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 20px;
-  color: var(--accent);
-  letter-spacing: -0.3px;
-}
+  .today-month-he {
+    font-family: var(--serif-he);
+    font-weight: 400;
+    font-size: clamp(15px, 3vw, 18px);
+    color: var(--ink-dim);
+    margin-top: 4px;
+    letter-spacing: 0.05em;
+  }
 
-h3 {
-  font-size: 17px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
+  .today-day {
+    font-family: var(--serif);
+    font-weight: 200;
+    font-size: clamp(108px, 26vw, 196px);
+    line-height: 0.85;
+    color: var(--ink);
+    letter-spacing: -0.05em;
+    margin: 14px 0;
+    font-feature-settings: "lnum";
+  }
 
-/* Paper cards */
-.paper {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
-  padding: 18px 22px;
-  margin-bottom: 14px;
-  transition: box-shadow 0.2s;
-}
+  .today-day.special {
+    font-style: italic;
+    font-size: clamp(48px, 11vw, 80px);
+    letter-spacing: 0;
+    line-height: 1;
+    padding: 24px 0;
+  }
 
-.paper:hover {
-  box-shadow: var(--card-shadow);
-}
+  .today-year {
+    font-family: var(--mono);
+    font-size: clamp(13px, 2.6vw, 16px);
+    color: var(--ink-dim);
+    letter-spacing: 0.22em;
+    margin-top: 12px;
+  }
 
-.paper-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-}
+  .today-year .he-label {
+    color: var(--accent);
+    margin-right: 4px;
+  }
 
-.paper-id {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  color: var(--text-secondary);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
+  .today-weekday {
+    font-family: var(--serif-he);
+    font-weight: 400;
+    font-size: 17px;
+    color: var(--accent-bright);
+    margin-top: 22px;
+    letter-spacing: 0.03em;
+  }
 
-.paper-title {
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 1.4;
-  color: var(--text);
-  margin-bottom: 6px;
-}
+  /* divider */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin: 44px 0 24px;
+  }
 
-.paper-title a {
-  color: inherit;
-  text-decoration: none;
-}
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--line) 30%, var(--line) 70%, transparent);
+  }
 
-.paper-title a:hover {
-  color: var(--accent);
-  text-decoration: underline;
-}
+  .divider span {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
 
-.paper-meta {
-  font-size: 14px;
-  color: var(--text-secondary);
-  margin-bottom: 8px;
-}
+  /* equivalents */
+  .equivalents {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 40px;
+  }
 
-.paper-desc {
-  font-size: 15px;
-  color: var(--text-secondary);
-  line-height: 1.55;
-}
+  .equiv-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--line);
+    padding: 18px 18px 20px;
+    position: relative;
+  }
 
-.tag {
-  display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  padding: 2px 7px;
-  border-radius: 3px;
-  color: #fff;
-  margin-right: 4px;
-}
+  .equiv-card::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 10px;
+    height: 10px;
+    border-top: 1px solid var(--accent);
+    border-right: 1px solid var(--accent);
+  }
+  .equiv-card::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: -1px;
+    width: 10px;
+    height: 10px;
+    border-bottom: 1px solid var(--accent);
+    border-left: 1px solid var(--accent);
+  }
 
-.tag-gravity { background: var(--tag-gravity); }
-.tag-cosmo { background: var(--tag-cosmo); }
-.tag-em { background: var(--tag-em); }
-.tag-qm { background: var(--tag-qm); }
-.tag-predict { background: var(--tag-predict); }
+  .equiv-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
 
-.status {
-  display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  padding: 2px 7px;
-  border-radius: 3px;
-  margin-left: 6px;
-}
+  .equiv-value {
+    font-family: var(--serif-he);
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.3;
+  }
 
-.status-review {
-  background: #fdebd0;
-  color: #935116;
-}
+  .equiv-value.ltr {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    direction: ltr;
+    text-align: right;
+  }
 
-.status-published {
-  background: #d5f5e3;
-  color: #1e8449;
-}
+  /* month grid */
+  .month-grid {
+    background: var(--bg-elevated);
+    border: 1px solid var(--line);
+    padding: 22px;
+    margin-bottom: 40px;
+    position: relative;
+  }
 
-/* Key results */
-.results-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-}
+  .month-grid::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 12px;
+    height: 12px;
+    border-top: 1px solid var(--accent);
+    border-right: 1px solid var(--accent);
+  }
 
-@media (max-width: 600px) {
-  .results-grid { grid-template-columns: 1fr; }
-}
+  .month-grid-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
 
-.result-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  padding: 16px;
-}
+  .month-grid-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 22px;
+    color: var(--accent);
+  }
 
-.result-card .equation {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
-  color: var(--accent);
-  margin-bottom: 6px;
-}
+  .month-grid-title .he {
+    font-family: var(--serif-he);
+    font-style: normal;
+    color: var(--ink-dim);
+    font-size: 16px;
+    margin-right: 8px;
+  }
 
-.result-card .label {
-  font-size: 14px;
-  color: var(--text-secondary);
-}
+  .month-grid-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.18em;
+  }
 
-/* Contact */
-.contact-line {
-  font-size: 16px;
-  margin-bottom: 6px;
-}
+  .weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 6px;
+  }
 
-.contact-line a {
-  color: var(--accent);
-  text-decoration: none;
-}
+  .weekday {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-align: center;
+    color: var(--ink-dim);
+    letter-spacing: 0.12em;
+    padding: 8px 0;
+    text-transform: uppercase;
+  }
 
-.contact-line a:hover { text-decoration: underline; }
+  .weekday.shabbat {
+    color: var(--accent-deep);
+  }
 
-/* Footer */
-footer {
-  padding: 30px 0;
-  text-align: center;
-  font-size: 13px;
-  color: var(--text-secondary);
-}
+  .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
 
-/* Equation block */
-.eq-highlight {
-  background: #f5f0eb;
-  border-left: 3px solid var(--accent);
-  padding: 14px 20px;
-  margin: 20px 0;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 15px;
-  color: var(--text);
-  overflow-x: auto;
-}
+  .day {
+    font-family: var(--mono);
+    font-size: 13px;
+    text-align: center;
+    padding: 12px 0;
+    color: var(--ink);
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    background: rgba(255, 255, 255, 0.01);
+  }
+
+  .day.current {
+    border-color: var(--accent);
+    color: var(--accent-bright);
+    background: rgba(212, 164, 86, 0.08);
+    font-weight: 600;
+    position: relative;
+  }
+
+  .day.shabbat {
+    color: var(--accent-deep);
+  }
+
+  /* year overview */
+  .year-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
+    gap: 6px;
+    margin-bottom: 40px;
+  }
+
+  .month-tile {
+    background: var(--bg-elevated);
+    border: 1px solid var(--line);
+    padding: 14px 6px 12px;
+    text-align: center;
+    transition: all 0.2s;
+  }
+
+  .month-tile.current {
+    border-color: var(--accent);
+    background: rgba(212, 164, 86, 0.08);
+  }
+
+  .month-tile-num {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--ink-dim);
+    letter-spacing: 0.15em;
+  }
+
+  .month-tile-name {
+    font-family: var(--serif-he);
+    font-size: 13px;
+    margin-top: 4px;
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  .month-tile.current .month-tile-name {
+    color: var(--accent-bright);
+  }
+
+  .month-tile.sol {
+    border-style: dashed;
+  }
+
+  /* converter */
+  .converter {
+    background: var(--bg-elevated);
+    border: 1px solid var(--line);
+    padding: 22px;
+    margin-bottom: 28px;
+    position: relative;
+  }
+
+  .converter::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 12px;
+    height: 12px;
+    border-top: 1px solid var(--accent);
+    border-right: 1px solid var(--accent);
+  }
+  .converter::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: -1px;
+    width: 12px;
+    height: 12px;
+    border-bottom: 1px solid var(--accent);
+    border-left: 1px solid var(--accent);
+  }
+
+  .converter-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 22px;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .converter-subtitle {
+    font-family: var(--serif-he);
+    font-size: 13px;
+    color: var(--ink-dim);
+    margin-bottom: 16px;
+  }
+
+  .converter input[type="date"] {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 14px;
+    padding: 12px 14px;
+    width: 100%;
+    outline: none;
+    color-scheme: dark;
+    direction: ltr;
+    text-align: left;
+  }
+
+  .converter input[type="date"]:focus {
+    border-color: var(--accent);
+  }
+
+  .converter-result {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+  }
+
+  .converter-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dotted rgba(212, 164, 86, 0.08);
+  }
+
+  .converter-result-row:last-child { border-bottom: none; }
+
+  .converter-result-label {
+    font-family: var(--mono);
+    color: var(--ink-dim);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .converter-result-value {
+    font-family: var(--serif-he);
+    color: var(--ink);
+    font-size: 15px;
+    text-align: left;
+    direction: ltr;
+  }
+
+  .converter-result-value.primary {
+    color: var(--accent-bright);
+    font-size: 16px;
+  }
+
+  /* footer */
+  footer {
+    text-align: center;
+    margin-top: 56px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+  }
+
+  .footer-line {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .footer-line .dot {
+    color: var(--accent);
+    margin: 0 8px;
+  }
+
+  .footer-note {
+    font-family: var(--serif-he);
+    font-size: 12px;
+    color: var(--ink-dim);
+    margin-top: 10px;
+    line-height: 1.6;
+    max-width: 480px;
+    margin-inline: auto;
+  }
+
+  /* responsive */
+  @media (max-width: 540px) {
+    .equivalents { grid-template-columns: 1fr; }
+    .day { font-size: 12px; padding: 10px 0; }
+    .weekday { font-size: 9px; }
+    .month-grid-title { font-size: 18px; }
+    .month-grid-title .he { font-size: 14px; }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-1 { animation: fadeIn 0.7s ease 0.00s both; }
+  .fade-2 { animation: fadeIn 0.7s ease 0.10s both; }
+  .fade-3 { animation: fadeIn 0.7s ease 0.25s both; }
+  .fade-4 { animation: fadeIn 0.7s ease 0.40s both; }
+  .fade-5 { animation: fadeIn 0.7s ease 0.55s both; }
+  .fade-6 { animation: fadeIn 0.7s ease 0.70s both; }
 </style>
 </head>
 <body>
-
 <div class="container">
 
-<header>
-  <h1>B. B. Kulangiev</h1>
-  <div class="location">Independent Researcher · Haifa, Israel</div>
-  <p class="tagline">
-    Developing a multi-paper framework for emergent gravity, electromagnetism, and cosmology
-    from the relativistic logarithmic superfluid vacuum. The vacuum condensate's Madelung 
-    hydrodynamics produce the Schwarzschild metric, Maxwell's equations, the Planck scale, 
-    and dark energy from a single wave equation.
-  </p>
-</header>
+  <header class="fade-1">
+    <div class="brand">Holocene · IFC</div>
+    <div class="brand-sub">לוח השנה ההולוצני</div>
+  </header>
 
-<nav>
-  <a href="#papers">Papers</a>
-  <a href="#results">Key Results</a>
-  <a href="#predictions">Testable Predictions</a>
-  <a href="#contact">Contact</a>
-</nav>
+  <section class="today fade-2">
+    <div class="today-label">TODAY · היום</div>
+    <div class="today-month" id="todayMonth">—</div>
+    <div class="today-month-he" id="todayMonthHe"></div>
+    <div class="today-day" id="todayDay">—</div>
+    <div class="today-year"><span class="he-label">HE</span><span id="todayYear">—</span></div>
+    <div class="today-weekday" id="todayWeekday">—</div>
+  </section>
 
-<!-- ============================================================ -->
-<section id="results">
-<h2>Key Results</h2>
+  <div class="divider fade-3"><span>EQUIVALENTS · מקבילות</span></div>
 
-<div class="results-grid">
-  <div class="result-card">
-    <div class="equation">γ = 1 (PPN)</div>
-    <div class="label">Light bending recovered exactly via the Painlevé-Gullstrand acoustic metric. Cassini-consistent.</div>
-  </div>
-  <div class="result-card">
-    <div class="equation">G = ηc²/(4πρ₀)</div>
-    <div class="label">Gravitational constant derived from vacuum condensate density. ρ₀ ≈ 10²⁶ kg/m³.</div>
-  </div>
-  <div class="result-card">
-    <div class="equation">β = 1 (PPN)</div>
-    <div class="label">Mercury perihelion precession (42.98″/century) from equivalence principle + PG metric.</div>
-  </div>
-  <div class="result-card">
-    <div class="equation">w = −1</div>
-    <div class="label">Dark energy as native vacuum pressure. Logarithmic EOS gives cosmological constant.</div>
-  </div>
-  <div class="result-card">
-    <div class="equation">R = 0.994</div>
-    <div class="label">Planetary magnetic scaling law across 6 planets, 8 orders of magnitude, single parameter.</div>
-  </div>
-  <div class="result-card">
-    <div class="equation">∂μF^μν = J^ν</div>
-    <div class="label">Maxwell's equations from gauged U(1) phase symmetry. Charge quantized by vortex winding.</div>
-  </div>
-</div>
-</section>
-
-<!-- ============================================================ -->
-<section id="papers">
-<h2>Papers</h2>
-
-<div class="paper" id="paper1">
-  <div class="paper-header">
-    <div>
-      <div class="paper-title">
-        <a href="https://doi.org/10.55277/researchhub.lt23p3pz.5" target="_blank">
-          Conditions for Emergent Gravitational Light Bending from a Logarithmic Superfluid Vacuum
-        </a>
-      </div>
-      <div class="paper-meta">
-        <span class="tag tag-gravity">gravity</span>
-        <span class="status status-review">Under Review — Grav. & Cosmol.</span>
-      </div>
+  <section class="equivalents fade-3">
+    <div class="equiv-card">
+      <div class="equiv-label">Gregorian</div>
+      <div class="equiv-value ltr" id="gregDate">—</div>
     </div>
-    <div class="paper-id">Paper 1</div>
-  </div>
-  <div class="paper-desc">
-    The kinematic trap (γ = 0 for any real scalar field), the Madelung escape, 
-    the static metric failure (γ = 3), and the unique PG solution yielding γ = 1.
-  </div>
-</div>
-
-<div class="paper" id="combined">
-  <div class="paper-header">
-    <div>
-      <div class="paper-title">
-        <a href="https://doi.org/10.55277/researchhub.5zj0sd53.2" target="_blank">
-          Emergent Newtonian Gravity and the Gravitational Feynman-Onsager Relation
-        </a>
-      </div>
-      <div class="paper-meta">
-        <span class="tag tag-gravity">gravity</span>
-        <span class="status status-published">ResearchHub</span>
-      </div>
+    <div class="equiv-card">
+      <div class="equiv-label">תאריך עברי</div>
+      <div class="equiv-value" id="hebDate">—</div>
     </div>
-    <div class="paper-id">Papers 2+7</div>
-  </div>
-  <div class="paper-desc">
-    G_eff derivation, collective PG flow from N solitons (Monte Carlo: 0.02%, slope −0.500),
-    axial outflow/jet prediction, planetary magnetic scaling (R = 0.994).
-  </div>
-</div>
+  </section>
 
-<div class="paper" id="paper3">
-  <div class="paper-header">
-    <div>
-      <div class="paper-title">
-        <a href="https://doi.org/10.55277/researchhub.zb97iumm.2" target="_blank">
-          Cosmological Implications: Dark Energy, the Hubble Tension, and a Vacuum Self-Consistency Equation
-        </a>
-      </div>
-      <div class="paper-meta">
-        <span class="tag tag-cosmo">cosmology</span>
-        <span class="status status-published">ResearchHub</span>
-      </div>
+  <section class="month-grid fade-4">
+    <div class="month-grid-header">
+      <div class="month-grid-title" id="monthGridTitle">—</div>
+      <div class="month-grid-num" id="monthGridNum">—</div>
     </div>
-    <div class="paper-id">Paper 3</div>
-  </div>
-  <div class="paper-desc">
-    w = −1 from logarithmic EOS, Hubble tension as vacuum thermodynamic fluctuation, 
-    CMB temperature as condensate equilibrium, Ω_γ ≈ α² self-consistency.
-  </div>
-</div>
-
-<div class="paper" id="paper4">
-  <div class="paper-header">
-    <div>
-      <div class="paper-title">
-        <a href="https://doi.org/10.55277/researchhub.0f3sc1d1.3" target="_blank">
-          Frozen Vacuum Perturbations as a Dark Matter Analogue
-        </a>
-      </div>
-      <div class="paper-meta">
-        <span class="tag tag-cosmo">cosmology</span>
-        <span class="status status-published">ResearchHub</span>
-      </div>
+    <div class="weekdays">
+      <div class="weekday">Sun</div>
+      <div class="weekday">Mon</div>
+      <div class="weekday">Tue</div>
+      <div class="weekday">Wed</div>
+      <div class="weekday">Thu</div>
+      <div class="weekday">Fri</div>
+      <div class="weekday shabbat">Sat</div>
     </div>
-    <div class="paper-id">Paper 4</div>
-  </div>
-  <div class="paper-desc">
-    SPARC rotation curve analysis. 112 galaxies fitted with vacuum density perturbation model.
-  </div>
-</div>
+    <div class="days" id="daysGrid"></div>
+  </section>
 
-<div class="paper" id="paper5">
-  <div class="paper-header">
-    <div>
-      <div class="paper-title">
-        <a href="https://doi.org/10.55277/researchhub.2wgfiqh8.3" target="_blank">
-          Singularity Regularization and the Emergent Planck Scale
-        </a>
-      </div>
-      <div class="paper-meta">
-        <span class="tag tag-gravity">gravity</span>
-        <span class="tag tag-qm">quantum</span>
-        <span class="status status-published">ResearchHub</span>
-      </div>
+  <div class="divider fade-5"><span>YEAR · 13 MONTHS · שנה</span></div>
+
+  <section class="year-overview fade-5" id="yearOverview"></section>
+
+  <section class="converter fade-6">
+    <div class="converter-title">Convert</div>
+    <div class="converter-subtitle">המרת תאריך גרגוריאני ללוח החדש ולעברי</div>
+    <input type="date" id="convertInput">
+    <div class="converter-result" id="convertResult"></div>
+  </section>
+
+  <footer class="fade-6">
+    <div class="footer-line">
+      <span>bekulio</span><span class="dot">·</span><span id="footerYear">12026</span><span class="dot">·</span><span>HE</span>
     </div>
-    <div class="paper-id">Paper 5</div>
-  </div>
-  <div class="paper-desc">
-    Self-consistency of gravitational coupling with Gausson energy scaling yields 
-    m_eff ≈ 0.67 m_Planck and ξ ≈ 1.5 l_Planck.
-  </div>
-</div>
-
-<div class="paper" id="paper6">
-  <div class="paper-header">
-    <div>
-      <div class="paper-title">
-        <a href="https://doi.org/10.55277/researchhub.q7r7petc.2" target="_blank">
-          Emergent Time as Phase Dynamics
-        </a>
-      </div>
-      <div class="paper-meta">
-        <span class="tag tag-qm">quantum</span>
-        <span class="status status-published">ResearchHub</span>
-      </div>
+    <div class="footer-note">
+      13 חודשים של 28 ימים. יום השנה בסוף השנה ויום העיבור באמצעה אינם שייכים לאף יום בשבוע. כל חודש מתחיל ביום ראשון.
     </div>
-    <div class="paper-id">Paper 6</div>
-  </div>
-  <div class="paper-desc">
-    Time as bookkeeping parameter from phase dynamics. Gravitational time dilation 
-    as spatial variation of chemical potential. Hubble flow as parabolic phase winding.
-  </div>
-</div>
-
-<div class="paper" id="paper8">
-  <div class="paper-header">
-    <div>
-      <div class="paper-title">
-        <a href="https://doi.org/10.55277/researchhub.yxhq39l8.2" target="_blank">
-          Emergent Electromagnetism from the Gauged Logarithmic Superfluid Vacuum
-        </a>
-      </div>
-      <div class="paper-meta">
-        <span class="tag tag-em">electromagnetism</span>
-        <span class="status status-published">ResearchHub</span>
-      </div>
-    </div>
-    <div class="paper-id">Paper 8</div>
-  </div>
-  <div class="paper-desc">
-    Gauging U(1) phase symmetry → Maxwell's equations. Charge quantization from vortex topology.
-    London equation for EM screening. c_gw = c_em automatically.
-  </div>
-</div>
-
-<div class="paper" id="paper9">
-  <div class="paper-header">
-    <div>
-      <div class="paper-title">
-        <a href="https://doi.org/10.55277/researchhub.mefuunki.1" target="_blank">
-          A Testable Prediction: Environment-Dependent Speed of Light
-        </a>
-      </div>
-      <div class="paper-meta">
-        <span class="tag tag-predict">prediction</span>
-        <span class="status status-published">ResearchHub</span>
-      </div>
-    </div>
-    <div class="paper-id">Paper 9</div>
-  </div>
-  <div class="paper-desc">
-    δc/c = −GM/(2c²r). Light slower near mass, faster in voids. 
-    Three tests: FRB timing, CMB void correlation, multi-messenger events.
-  </div>
-</div>
-
-<div class="paper" id="paper10">
-  <div class="paper-header">
-    <div>
-      <div class="paper-title">
-        <a href="https://doi.org/10.55277/researchhub.rvj53pon.6" target="_blank">
-          Environment-Dependent Vacuum Impedance: The μ₀–ε₀ Splitting
-        </a>
-      </div>
-      <div class="paper-meta">
-        <span class="tag tag-em">electromagnetism</span>
-        <span class="tag tag-predict">prediction</span>
-        <span class="status status-published">ResearchHub</span>
-      </div>
-    </div>
-    <div class="paper-id">Paper 10</div>
-  </div>
-  <div class="paper-desc">
-    Near mass: δμ₀/μ₀ = +U, δε₀/ε₀ = 0. Speed drops, impedance rises.
-    Fine structure constant: δα/α = +U/2. Testable with atomic clocks.
-  </div>
-</div>
-
-<div class="paper" id="paper-inertia">
-  <div class="paper-header">
-    <div>
-      <div class="paper-title">
-        <a href="https://doi.org/10.55277/researchhub.3z0joqi1.8" target="_blank">
-          Emergent Inertia, Mass-Energy Equivalence, and the Helmholtz Decomposition of Charge and Spin
-        </a>
-      </div>
-      <div class="paper-meta">
-        <span class="tag tag-qm">quantum</span>
-        <span class="status status-published">ResearchHub</span>
-      </div>
-    </div>
-    <div class="paper-id">Inertia</div>
-  </div>
-  <div class="paper-desc">
-    F = ma from hydrodynamic added mass. E = mc² from momentum flux. 
-    Charge = irrotational flow (divergence). Spin = solenoidal flow (curl). 
-    su(2) from antisymmetric velocity gradient tensor.
-  </div>
-</div>
-
-<div class="paper" id="paper11">
-  <div class="paper-header">
-    <div>
-      <div class="paper-title">
-        <a href="https://doi.org/10.55277/researchhub.x7bw3yty.2" target="_blank">
-          The Quantum Hall Effect as Topological Phase-Locking
-        </a>
-      </div>
-      <div class="paper-meta">
-        <span class="tag tag-qm">quantum</span>
-        <span class="status status-published">ResearchHub</span>
-      </div>
-    </div>
-    <div class="paper-id">Paper 11</div>
-  </div>
-  <div class="paper-desc">
-    R_K = h/e² as circulation impedance. Landau levels as vortex-lattice modes.
-    σ_xy = νe²/h from winding number conservation. Reproduces IQHE to 10⁻⁹.
-  </div>
-</div>
-
-<div class="paper" id="paper0">
-  <div class="paper-header">
-    <div>
-      <div class="paper-title">
-        <a href="https://doi.org/10.55277/researchhub.rczbbcws.3" target="_blank">
-          An Approximate Numerical Relation Between Ω_γ and the Fine Structure Constant
-        </a>
-      </div>
-      <div class="paper-meta">
-        <span class="tag tag-cosmo">cosmology</span>
-        <span class="status status-published">ResearchHub</span>
-      </div>
-    </div>
-    <div class="paper-id">Paper 0</div>
-  </div>
-  <div class="paper-desc">
-    The observational relation Ω_γ ≈ α² as a thermodynamic constraint of the vacuum condensate.
-  </div>
-</div>
-
-</section>
-
-<!-- ============================================================ -->
-<section id="predictions">
-<h2>Testable Predictions</h2>
-
-<div class="paper" style="border-left-color: var(--tag-predict);">
-  <h3>1. FRB Timing Residuals</h3>
-  <div class="paper-desc">
-    FRBs traversing cosmic voids arrive earlier than DM-predicted.
-    Testable with CHIME/FRB + SDSS/DESI cross-correlation.
-    Predicted magnitude: seconds for a 60 Mpc void crossing.
-  </div>
-</div>
-
-<div class="paper" style="border-left-color: var(--tag-predict);">
-  <h3>2. Planetary Magnetic Scaling</h3>
-  <div class="paper-desc">
-    B ∝ [Ω · (GM/Rc²) · R_core³ · f_liquid]^0.79 with R = 0.994 across 
-    Mercury, Earth, Jupiter, Saturn, Uranus, Neptune. The GM/(Rc²) factor
-    distinguishes this from standard dynamo scaling.
-  </div>
-</div>
-
-<div class="paper" style="border-left-color: var(--tag-predict);">
-  <h3>3. Astrophysical Jets as Gravitational Exhaust</h3>
-  <div class="paper-desc">
-    Polar jets predicted as hydrodynamic necessity of PG inflow continuity.
-    Exact analytical solution: v_θ = −(3/2)√(2GM/r) cot θ.
-    50% of mass transport within 30° of pole.
-  </div>
-</div>
-
-<div class="paper" style="border-left-color: var(--tag-predict);">
-  <h3>4. μ₀–ε₀ Splitting</h3>
-  <div class="paper-desc">
-    Near gravitating mass: μ₀ increases (+U), ε₀ unchanged.
-    Implies δα/α = +U/2. Testable with atomic clock comparisons
-    at different gravitational potentials.
-  </div>
-</div>
-</section>
-
-<!-- ============================================================ -->
-<section id="contact">
-<h2>Contact</h2>
-<p class="contact-line">Email: <a href="mailto:bennybk.research@gmail.com">bennybk.research@gmail.com</a></p>
-<p class="contact-line">Article under review: Gravitation and Cosmology, Article ID GC26-054</p>
-</section>
+  </footer>
 
 </div>
 
-<footer>
-  <div class="container">
-    © 2026 B. B. Kulangiev · Last updated April 2026
-  </div>
-</footer>
+<script>
+  const MONTHS_EN = ['January','February','March','April','May','June','Sol','July','August','September','October','November','December'];
+  const MONTHS_HE = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','סול','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+  const WEEKDAYS_HE = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
 
+  // Per user choice: simple Julian-style rule, every 4 years
+  function isLeapYear(gregYear) {
+    return gregYear % 4 === 0;
+  }
+
+  function dayOfYear(date) {
+    const start = Date.UTC(date.getFullYear(), 0, 1);
+    const current = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+    return Math.floor((current - start) / 86400000) + 1;
+  }
+
+  function gregToIFC(date) {
+    const gregYear = date.getFullYear();
+    const ifcYear = gregYear + 10000;
+    const doy = dayOfYear(date);
+    const leap = isLeapYear(gregYear);
+    const yearLength = leap ? 366 : 365;
+
+    // Year Day = last day of year (outside week & month)
+    if (doy === yearLength) {
+      return { year: ifcYear, monthIndex: null, day: null, special: 'year' };
+    }
+
+    // Leap Day = day 169 in leap year (between Jun 28 and Sol 1)
+    if (leap && doy === 169) {
+      return { year: ifcYear, monthIndex: null, day: null, special: 'leap' };
+    }
+
+    let adjusted = doy;
+    if (leap && doy > 169) adjusted -= 1;
+
+    const monthIndex = Math.floor((adjusted - 1) / 28);
+    const day = ((adjusted - 1) % 28) + 1;
+
+    return { year: ifcYear, monthIndex, day, special: null };
+  }
+
+  function getHebrewDate(date) {
+    try {
+      return new Intl.DateTimeFormat('he-u-ca-hebrew', {
+        day: 'numeric', month: 'long', year: 'numeric'
+      }).format(date);
+    } catch (e) {
+      return '—';
+    }
+  }
+
+  function getGregorianFormatted(date) {
+    return new Intl.DateTimeFormat('en-GB', {
+      day: 'numeric', month: 'long', year: 'numeric'
+    }).format(date);
+  }
+
+  // IFC weekday: day 1 of every month = Sunday (index 0)
+  function weekdayIndexFromDay(day) {
+    return (day - 1) % 7;
+  }
+
+  function weekdayName(day) {
+    return WEEKDAYS_HE[weekdayIndexFromDay(day)];
+  }
+
+  function renderToday() {
+    const now = new Date();
+    const ifc = gregToIFC(now);
+
+    const monthEl = document.getElementById('todayMonth');
+    const monthHeEl = document.getElementById('todayMonthHe');
+    const dayEl = document.getElementById('todayDay');
+    const yearEl = document.getElementById('todayYear');
+    const wdEl = document.getElementById('todayWeekday');
+
+    if (ifc.special === 'year') {
+      monthEl.textContent = 'Year Day';
+      monthHeEl.textContent = 'יום השנה';
+      dayEl.textContent = '★';
+      dayEl.classList.add('special');
+      wdEl.textContent = 'יום חג — לא שייך לחודש או ליום בשבוע';
+    } else if (ifc.special === 'leap') {
+      monthEl.textContent = 'Leap Day';
+      monthHeEl.textContent = 'יום העיבור';
+      dayEl.textContent = '✦';
+      dayEl.classList.add('special');
+      wdEl.textContent = 'יום חג — מופיע רק בשנה מעוברת';
+    } else {
+      monthEl.textContent = MONTHS_EN[ifc.monthIndex];
+      monthHeEl.textContent = MONTHS_HE[ifc.monthIndex];
+      dayEl.textContent = ifc.day;
+      wdEl.textContent = 'יום ' + weekdayName(ifc.day);
+    }
+
+    yearEl.textContent = ifc.year;
+    document.getElementById('footerYear').textContent = ifc.year;
+
+    document.getElementById('gregDate').textContent = getGregorianFormatted(now);
+    document.getElementById('hebDate').textContent = getHebrewDate(now);
+
+    renderMonth(ifc);
+    renderYearOverview(ifc);
+  }
+
+  function renderMonth(ifc) {
+    const titleEl = document.getElementById('monthGridTitle');
+    const numEl = document.getElementById('monthGridNum');
+    const gridEl = document.getElementById('daysGrid');
+
+    if (ifc.special) {
+      titleEl.innerHTML = (ifc.special === 'year' ? 'Year Day' : 'Leap Day') +
+                         ' <span class="he">' + (ifc.special === 'year' ? 'יום השנה' : 'יום העיבור') + '</span>';
+      numEl.textContent = 'INTERCALARY';
+      gridEl.innerHTML = '<div style="grid-column: 1 / -1; padding: 32px 0; text-align: center; font-family: var(--serif-he); color: var(--ink-dim); font-size: 14px;">יום בודד מחוץ למחזור</div>';
+      return;
+    }
+
+    titleEl.innerHTML = MONTHS_EN[ifc.monthIndex] + ' <span class="he">' + MONTHS_HE[ifc.monthIndex] + '</span>';
+    numEl.textContent = String(ifc.monthIndex + 1).padStart(2, '0') + ' / 13';
+
+    gridEl.innerHTML = '';
+    for (let d = 1; d <= 28; d++) {
+      const cell = document.createElement('div');
+      cell.className = 'day';
+      const wdIdx = weekdayIndexFromDay(d);
+      if (wdIdx === 6) cell.classList.add('shabbat');
+      if (d === ifc.day) cell.classList.add('current');
+      cell.textContent = String(d).padStart(2, '0');
+      gridEl.appendChild(cell);
+    }
+  }
+
+  function renderYearOverview(ifc) {
+    const container = document.getElementById('yearOverview');
+    container.innerHTML = '';
+    for (let i = 0; i < 13; i++) {
+      const tile = document.createElement('div');
+      tile.className = 'month-tile';
+      if (ifc.monthIndex === i) tile.classList.add('current');
+      if (i === 6) tile.classList.add('sol');
+      tile.innerHTML =
+        '<div class="month-tile-num">' + String(i + 1).padStart(2, '0') + '</div>' +
+        '<div class="month-tile-name">' + MONTHS_HE[i] + '</div>';
+      container.appendChild(tile);
+    }
+  }
+
+  function setupConverter() {
+    const input = document.getElementById('convertInput');
+    const result = document.getElementById('convertResult');
+
+    const today = new Date();
+    const pad = (n) => String(n).padStart(2, '0');
+    input.value = today.getFullYear() + '-' + pad(today.getMonth() + 1) + '-' + pad(today.getDate());
+
+    function update() {
+      const val = input.value;
+      if (!val) { result.innerHTML = ''; return; }
+      const [y, m, d] = val.split('-').map(Number);
+      const date = new Date(y, m - 1, d);
+      const ifc = gregToIFC(date);
+
+      let ifcStr;
+      if (ifc.special === 'year') ifcStr = 'יום השנה · ' + ifc.year + ' HE';
+      else if (ifc.special === 'leap') ifcStr = 'יום העיבור · ' + ifc.year + ' HE';
+      else ifcStr = ifc.day + ' ' + MONTHS_HE[ifc.monthIndex] + ' ' + ifc.year + ' HE';
+
+      result.innerHTML =
+        '<div class="converter-result-row">' +
+          '<div class="converter-result-label">IFC</div>' +
+          '<div class="converter-result-value primary">' + ifcStr + '</div>' +
+        '</div>' +
+        '<div class="converter-result-row">' +
+          '<div class="converter-result-label">GREG</div>' +
+          '<div class="converter-result-value">' + getGregorianFormatted(date) + '</div>' +
+        '</div>' +
+        '<div class="converter-result-row">' +
+          '<div class="converter-result-label">HEB</div>' +
+          '<div class="converter-result-value">' + getHebrewDate(date) + '</div>' +
+        '</div>';
+    }
+
+    input.addEventListener('change', update);
+    input.addEventListener('input', update);
+    update();
+  }
+
+  renderToday();
+  setupConverter();
+</script>
 </body>
 </html>
