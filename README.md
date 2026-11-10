@@ -1,75 +1,27 @@
-# Holocene Calendar · IFC
+# bekulio.github.io
 
-A single-page calendar that displays today's date in a custom **Holocene + International Fixed Calendar** system, alongside its Gregorian and Hebrew equivalents.
+Two pages, one site: **https://bekulio.github.io**
 
-**Live:** https://bekulio.github.io
+| Page | File | What it is |
+|---|---|---|
+| Election proposal (main) | `index.html` | "National-spread qualification": a party enters the Knesset only if it passes 3.25% in at least 60% of the entries on a frozen list of localities and regional councils. Hebrew. |
+| Holocene Calendar | `calendar.html` | Today's date in a Holocene + International Fixed Calendar system, with Gregorian and Hebrew equivalents. Details: [docs/CALENDAR.md](docs/CALENDAR.md). |
 
-לוח שנה הולוצני בעל 13 חודשים של 28 ימים, עם מקבילות לתאריך הגרגוריאני והעברי.
+## Election proposal
 
----
-
-## Calendar rules
-
-| Property         | Value |
-|------------------|-------|
-| Year offset      | Gregorian year + 10,000 (Holocene Era) |
-| Months per year  | 13 |
-| Days per month   | 28 (exactly 4 weeks) |
-| Month order      | January, February, March, April, May, June, **Sol**, July, August, September, October, November, December |
-| Year Day         | 1 intercalary day after 28 December — not part of any month or weekday |
-| Leap Day         | 1 intercalary day between 28 June and 1 Sol — only in leap years |
-| Leap rule        | Every 4 years (Julian-style) |
-| Week start       | Sunday — every month starts on Sunday |
-
-The new month `Sol` sits between June and July. The two intercalary days exist outside the weekly cycle, so every date in a given month always falls on the same weekday.
-
----
-
-## Features
-
-- Today's date displayed prominently in the IFC system
-- Equivalent Gregorian and Hebrew dates (via `Intl.DateTimeFormat`)
-- Browse by day or month with on-screen buttons or keyboard arrows
-- Click any day in the month grid or any month tile to jump
-- Date converter for arbitrary Gregorian dates
-
-### Keyboard shortcuts
-
-| Key       | Action |
-|-----------|--------|
-| `←` / `→` | Navigate one day |
-| `↑` / `↓` | Navigate one month |
-| `T` / `ה` | Return to today |
-
----
-
-## Implementation
-
-Single `index.html` file. No build step, no dependencies beyond Google Fonts (Fraunces, JetBrains Mono, Frank Ruhl Libre).
-
-Hebrew calendar conversion uses the browser's built-in `Intl.DateTimeFormat('he-u-ca-hebrew', …)` — no external library required.
-
-### Local preview
+- Text: `index.html` (same content in [docs/proposal.md](docs/proposal.md))
+- Simulation, data and chart: [`simulation/`](simulation/)
 
 ```
-# any static file server works
-python3 -m http.server 8000
-# then open http://localhost:8000
+cd simulation
+pip install -r requirements.txt
+python final_simulation.py
 ```
 
-Or just double-click `index.html`.
+Inputs: `expc_1.csv` (2026 results by locality, Central Elections Committee) and `downloadFile.xlsx` (localities, Central Bureau of Statistics). The simulation is static: it applies the rule to the 2026 votes without any change in voting behavior.
 
----
+## Local preview
 
-## Notes
-
-The weekday shown by this calendar reflects the **IFC-fixed weekday** (where day-of-month deterministically maps to day-of-week), not the actual Gregorian weekday of the same calendar day. This is the central design feature of IFC, not a bug.
-
-The Julian-style leap rule (every 4 years, no century exception) accumulates roughly 1 day of drift against the solar year every ~128 years. For a personal calendar this is irrelevant; for a multi-century project, switch to the Gregorian rule.
-
----
-
-## Credits
-
-- **International Fixed Calendar** — Moses B. Cotsworth, 1902. Used internally by Eastman Kodak from 1928 to 1989.
-- **Holocene Era** — Cesare Emiliani, 1993. Year offset of +10,000 to align the start of the era with the approximate beginning of human civilization.
+```
+python3 -m http.server 8000   # then open http://localhost:8000
+```

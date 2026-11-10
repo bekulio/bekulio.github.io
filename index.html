@@ -1,1056 +1,388 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>לוח השנה ההולוצני · 12026 HE</title>
-<meta name="description" content="לוח השנה ההולוצני — מערכת תאריכים חלופית מבוססת IFC עם 13 חודשים של 28 ימים">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,200;9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@300;400;500;700&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #181d27;
-    --bg-elevated: #232938;
-    --bg-input: #131722;
-    --ink: #f0e6d2;
-    --ink-dim: #8c8472;
-    --accent: #d4a456;
-    --accent-bright: #e8c178;
-    --accent-deep: #8a6a35;
-    --line: rgba(212, 164, 86, 0.22);
-    --line-strong: rgba(212, 164, 86, 0.45);
-    --serif: 'Fraunces', serif;
-    --serif-he: 'Frank Ruhl Libre', serif;
-    --mono: 'JetBrains Mono', monospace;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { min-height: 100%; }
-
-  body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: var(--serif-he);
-    font-size: 16px;
-    line-height: 1.5;
-    background-image:
-      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(212, 164, 86, 0.10) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 40% at 50% 100%, rgba(212, 164, 86, 0.05) 0%, transparent 60%);
-    position: relative;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    background-image:
-      linear-gradient(rgba(212, 164, 86, 0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(212, 164, 86, 0.025) 1px, transparent 1px);
-    background-size: 64px 64px;
-    z-index: 0;
-    mask-image: radial-gradient(ellipse at center, black 30%, transparent 90%);
-  }
-
-  .container {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 28px 22px 56px;
-    position: relative;
-    z-index: 1;
-  }
-
-  header {
-    border-bottom: 1px solid var(--line);
-    padding-bottom: 14px;
-    margin-bottom: 36px;
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  .brand {
-    font-family: var(--serif);
-    font-weight: 300;
-    font-size: 13px;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--accent);
-  }
-
-  .brand-sub {
-    font-family: var(--serif-he);
-    font-weight: 300;
-    font-size: 13px;
-    color: var(--ink-dim);
-    letter-spacing: 0.04em;
-  }
-
-  /* hero */
-  .today {
-    margin: 40px 0 24px;
-    text-align: center;
-    position: relative;
-  }
-
-  .today::before, .today::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 24px;
-    height: 1px;
-    background: var(--accent);
-  }
-  .today::before { top: -20px; }
-
-  .today-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.32em;
-    color: var(--ink-dim);
-    text-transform: uppercase;
-    margin-bottom: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .today-label .live-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 8px var(--accent);
-    animation: pulse 2.4s ease-in-out infinite;
-  }
-
-  .today-label.viewing .live-dot {
-    background: var(--ink-dim);
-    box-shadow: none;
-    animation: none;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
-  }
-
-  .today-month {
-    font-family: var(--serif);
-    font-weight: 300;
-    font-style: italic;
-    font-size: clamp(26px, 5.5vw, 38px);
-    color: var(--accent);
-    letter-spacing: 0.02em;
-    line-height: 1.1;
-  }
-
-  .today-month-he {
-    font-family: var(--serif-he);
-    font-weight: 400;
-    font-size: clamp(15px, 3vw, 18px);
-    color: var(--ink-dim);
-    margin-top: 4px;
-    letter-spacing: 0.05em;
-  }
-
-  .today-day {
-    font-family: var(--serif);
-    font-weight: 200;
-    font-size: clamp(108px, 26vw, 196px);
-    line-height: 0.85;
-    color: var(--ink);
-    letter-spacing: -0.05em;
-    margin: 14px 0;
-    font-feature-settings: "lnum";
-  }
-
-  .today-day.special {
-    font-style: italic;
-    font-size: clamp(48px, 11vw, 80px);
-    letter-spacing: 0;
-    line-height: 1;
-    padding: 24px 0;
-  }
-
-  .today-year {
-    font-family: var(--mono);
-    font-size: clamp(13px, 2.6vw, 16px);
-    color: var(--ink-dim);
-    letter-spacing: 0.22em;
-    margin-top: 12px;
-  }
-
-  .today-year .he-label {
-    color: var(--accent);
-    margin-right: 4px;
-  }
-
-  .today-weekday {
-    font-family: var(--serif-he);
-    font-weight: 400;
-    font-size: 17px;
-    color: var(--accent-bright);
-    margin-top: 20px;
-    letter-spacing: 0.03em;
-  }
-
-  /* navigation controls */
-  .nav-controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 4px;
-    margin-top: 28px;
-    flex-wrap: wrap;
-  }
-
-  .nav-btn {
-    background: transparent;
-    border: 1px solid var(--line);
-    color: var(--ink);
-    font-family: var(--serif-he);
-    font-size: 13px;
-    padding: 9px 14px;
-    cursor: pointer;
-    transition: all 0.15s;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    min-height: 38px;
-    letter-spacing: 0.02em;
-  }
-
-  .nav-btn:hover {
-    border-color: var(--accent);
-    color: var(--accent-bright);
-    background: rgba(212, 164, 86, 0.06);
-  }
-
-  .nav-btn:active {
-    transform: translateY(1px);
-  }
-
-  .nav-btn .chev {
-    font-family: var(--mono);
-    font-size: 14px;
-    color: var(--ink-dim);
-    line-height: 1;
-  }
-
-  .nav-btn:hover .chev { color: var(--accent); }
-
-  .nav-btn.today-btn {
-    background: var(--accent);
-    color: var(--bg);
-    border-color: var(--accent);
-    font-weight: 500;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    padding: 9px 16px;
-  }
-
-  .nav-btn.today-btn:hover {
-    background: var(--accent-bright);
-    color: var(--bg);
-  }
-
-  .nav-btn.today-btn.hidden {
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  /* divider */
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    margin: 40px 0 22px;
-  }
-
-  .divider::before, .divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--line) 30%, var(--line) 70%, transparent);
-  }
-
-  .divider span {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.32em;
-    color: var(--ink-dim);
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  /* equivalents */
-  .equivalents {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin-bottom: 36px;
-  }
-
-  .equiv-card {
-    background: var(--bg-elevated);
-    border: 1px solid var(--line);
-    padding: 18px 18px 20px;
-    position: relative;
-  }
-
-  .equiv-card::before {
-    content: '';
-    position: absolute;
-    top: -1px;
-    right: -1px;
-    width: 10px;
-    height: 10px;
-    border-top: 1px solid var(--accent);
-    border-right: 1px solid var(--accent);
-  }
-  .equiv-card::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: -1px;
-    width: 10px;
-    height: 10px;
-    border-bottom: 1px solid var(--accent);
-    border-left: 1px solid var(--accent);
-  }
-
-  .equiv-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.28em;
-    color: var(--ink-dim);
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-
-  .equiv-value {
-    font-family: var(--serif-he);
-    font-size: 17px;
-    font-weight: 400;
-    color: var(--ink);
-    line-height: 1.3;
-  }
-
-  .equiv-value.ltr {
-    font-family: var(--serif);
-    font-style: italic;
-    font-weight: 300;
-    direction: ltr;
-    text-align: right;
-  }
-
-  /* month grid */
-  .month-grid {
-    background: var(--bg-elevated);
-    border: 1px solid var(--line);
-    padding: 22px;
-    margin-bottom: 36px;
-    position: relative;
-  }
-
-  .month-grid::before {
-    content: '';
-    position: absolute;
-    top: -1px;
-    right: -1px;
-    width: 12px;
-    height: 12px;
-    border-top: 1px solid var(--accent);
-    border-right: 1px solid var(--accent);
-  }
-
-  .month-grid-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 14px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--line);
-    gap: 8px;
-  }
-
-  .month-grid-title {
-    font-family: var(--serif);
-    font-style: italic;
-    font-weight: 300;
-    font-size: 22px;
-    color: var(--accent);
-  }
-
-  .month-grid-title .he {
-    font-family: var(--serif-he);
-    font-style: normal;
-    color: var(--ink-dim);
-    font-size: 16px;
-    margin-right: 8px;
-  }
-
-  .month-grid-num {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--ink-dim);
-    letter-spacing: 0.18em;
-  }
-
-  .month-nav {
-    display: flex;
-    gap: 4px;
-    align-items: center;
-  }
-
-  .mini-btn {
-    background: transparent;
-    border: 1px solid var(--line);
-    color: var(--ink-dim);
-    font-family: var(--mono);
-    font-size: 12px;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    transition: all 0.15s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-  }
-
-  .mini-btn:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  .weekdays {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
-    margin-bottom: 6px;
-  }
-
-  .weekday {
-    font-family: var(--mono);
-    font-size: 9px;
-    text-align: center;
-    color: var(--ink-dim);
-    letter-spacing: 0.12em;
-    padding: 8px 0;
-    text-transform: uppercase;
-  }
-
-  .weekday.shabbat { color: var(--accent-deep); }
-
-  .days {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
-  }
-
-  .day {
-    font-family: var(--mono);
-    font-size: 13px;
-    text-align: center;
-    padding: 12px 0;
-    color: var(--ink);
-    border: 1px solid transparent;
-    transition: all 0.15s;
-    background: rgba(255, 255, 255, 0.015);
-    cursor: pointer;
-  }
-
-  .day:hover {
-    border-color: var(--line-strong);
-    background: rgba(212, 164, 86, 0.04);
-  }
-
-  .day.current {
-    border-color: var(--accent);
-    color: var(--accent-bright);
-    background: rgba(212, 164, 86, 0.10);
-    font-weight: 600;
-  }
-
-  .day.is-today-real {
-    box-shadow: inset 0 0 0 1px var(--accent);
-  }
-
-  .day.shabbat { color: var(--accent-deep); }
-
-  /* year overview */
-  .year-overview {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
-    gap: 6px;
-    margin-bottom: 36px;
-  }
-
-  .month-tile {
-    background: var(--bg-elevated);
-    border: 1px solid var(--line);
-    padding: 14px 6px 12px;
-    text-align: center;
-    transition: all 0.15s;
-    cursor: pointer;
-  }
-
-  .month-tile:hover {
-    border-color: var(--line-strong);
-  }
-
-  .month-tile.current {
-    border-color: var(--accent);
-    background: rgba(212, 164, 86, 0.10);
-  }
-
-  .month-tile-num {
-    font-family: var(--mono);
-    font-size: 9px;
-    color: var(--ink-dim);
-    letter-spacing: 0.15em;
-  }
-
-  .month-tile-name {
-    font-family: var(--serif-he);
-    font-size: 13px;
-    margin-top: 4px;
-    color: var(--ink);
-    font-weight: 400;
-  }
-
-  .month-tile.current .month-tile-name {
-    color: var(--accent-bright);
-  }
-
-  .month-tile.sol { border-style: dashed; }
-
-  /* converter */
-  .converter {
-    background: var(--bg-elevated);
-    border: 1px solid var(--line);
-    padding: 22px;
-    margin-bottom: 28px;
-    position: relative;
-  }
-
-  .converter::before {
-    content: '';
-    position: absolute;
-    top: -1px;
-    right: -1px;
-    width: 12px;
-    height: 12px;
-    border-top: 1px solid var(--accent);
-    border-right: 1px solid var(--accent);
-  }
-  .converter::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: -1px;
-    width: 12px;
-    height: 12px;
-    border-bottom: 1px solid var(--accent);
-    border-left: 1px solid var(--accent);
-  }
-
-  .converter-title {
-    font-family: var(--serif);
-    font-style: italic;
-    font-weight: 300;
-    font-size: 22px;
-    color: var(--accent);
-    margin-bottom: 4px;
-  }
-
-  .converter-subtitle {
-    font-family: var(--serif-he);
-    font-size: 13px;
-    color: var(--ink-dim);
-    margin-bottom: 16px;
-  }
-
-  .converter input[type="date"] {
-    background: var(--bg-input);
-    border: 1px solid var(--line);
-    color: var(--ink);
-    font-family: var(--mono);
-    font-size: 14px;
-    padding: 12px 14px;
-    width: 100%;
-    outline: none;
-    color-scheme: dark;
-    direction: ltr;
-    text-align: left;
-  }
-
-  .converter input[type="date"]:focus { border-color: var(--accent); }
-
-  .converter-result {
-    margin-top: 16px;
-    padding-top: 14px;
-    border-top: 1px dashed var(--line);
-  }
-
-  .converter-result-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: 1px dotted rgba(212, 164, 86, 0.10);
-  }
-
-  .converter-result-row:last-child { border-bottom: none; }
-
-  .converter-result-label {
-    font-family: var(--mono);
-    color: var(--ink-dim);
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-  }
-
-  .converter-result-value {
-    font-family: var(--serif-he);
-    color: var(--ink);
-    font-size: 15px;
-    text-align: left;
-    direction: ltr;
-  }
-
-  .converter-result-value.primary {
-    color: var(--accent-bright);
-    font-size: 16px;
-  }
-
-  /* footer */
-  footer {
-    text-align: center;
-    margin-top: 48px;
-    padding-top: 28px;
-    border-top: 1px solid var(--line);
-  }
-
-  .footer-line {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--ink-dim);
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-  }
-
-  .footer-line .dot {
-    color: var(--accent);
-    margin: 0 8px;
-  }
-
-  .footer-note {
-    font-family: var(--serif-he);
-    font-size: 12px;
-    color: var(--ink-dim);
-    margin-top: 10px;
-    line-height: 1.6;
-    max-width: 480px;
-    margin-inline: auto;
-  }
-
-  @media (max-width: 540px) {
-    .equivalents { grid-template-columns: 1fr; }
-    .day { font-size: 12px; padding: 10px 0; }
-    .weekday { font-size: 9px; }
-    .month-grid-title { font-size: 18px; }
-    .month-grid-title .he { font-size: 14px; }
-    .nav-btn { font-size: 12px; padding: 8px 11px; }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .fade-1 { animation: fadeIn 0.7s ease 0.00s both; }
-  .fade-2 { animation: fadeIn 0.7s ease 0.10s both; }
-  .fade-3 { animation: fadeIn 0.7s ease 0.25s both; }
-  .fade-4 { animation: fadeIn 0.7s ease 0.40s both; }
-  .fade-5 { animation: fadeIn 0.7s ease 0.55s both; }
-  .fade-6 { animation: fadeIn 0.7s ease 0.70s both; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>תנאי כניסה של פיזור ארצי · הצעה לרפורמה בבחירות</title>
+  <meta name="description"
+    content="הצעה לשינוי תנאי הכניסה של מפלגות לכנסת: אחוז חסימה שנבדק על פני שורות גאוגרפיות קבועות.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700;900&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #181d27;
+      --card: #232938;
+      --ink: #f0e6d2;
+      --dim: #8c8472;
+      --gold: #d4a456;
+      --gold2: #e8c178;
+      --line: rgba(212, 164, 86, .25);
+      --serif: 'Frank Ruhl Libre', serif
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font: 400 18px/1.75 var(--serif);
+      -webkit-font-smoothing: antialiased
+    }
+
+    a {
+      color: var(--gold2)
+    }
+
+    a:focus-visible,
+    summary:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px
+    }
+
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 22px 64px
+    }
+
+    nav {
+      display: flex;
+      gap: 6px;
+      border-bottom: 1px solid var(--line);
+      padding: 16px 0 0;
+      margin-bottom: 56px
+    }
+
+    nav a {
+      padding: 10px 22px;
+      text-decoration: none;
+      color: var(--dim);
+      border: 1px solid transparent;
+      border-bottom: 0;
+      font-size: 16px
+    }
+
+    nav a[aria-current=page] {
+      color: var(--ink);
+      border-color: var(--line);
+      background: var(--card);
+      font-weight: 700
+    }
+
+    nav a:hover {
+      color: var(--gold2)
+    }
+
+    h1 {
+      font-weight: 900;
+      font-size: clamp(34px, 7vw, 54px);
+      line-height: 1.15;
+      margin-bottom: 18px
+    }
+
+    .by {
+      color: var(--dim);
+      font-size: 15px;
+      margin-bottom: 44px
+    }
+
+    .rule {
+      font-size: clamp(22px, 4.2vw, 30px);
+      line-height: 1.5;
+      font-weight: 500;
+      color: var(--gold2);
+      border-inline-start: 3px solid var(--gold);
+      padding-inline-start: 20px;
+      margin-bottom: 56px
+    }
+
+    h2 {
+      font-weight: 700;
+      font-size: 26px;
+      margin: 52px 0 14px
+    }
+
+    p,
+    li {
+      margin-bottom: 12px;
+      max-width: 62ch
+    }
+
+    ol,
+    ul {
+      padding-inline-start: 26px
+    }
+
+    li ul {
+      margin-top: 8px
+    }
+
+    .scroll {
+      overflow-x: auto;
+      margin: 20px 0 10px
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 520px;
+      font-size: 16px
+    }
+
+    th,
+    td {
+      padding: 9px 12px;
+      text-align: start;
+      border-bottom: 1px solid var(--line)
+    }
+
+    th {
+      color: var(--dim);
+      font-weight: 500
+    }
+
+    td.n,
+    th.n {
+      text-align: end;
+      font-variant-numeric: tabular-nums
+    }
+
+    tr.in td {
+      color: var(--gold2);
+      font-weight: 700
+    }
+
+    tr.out td {
+      color: var(--dim)
+    }
+
+    .note {
+      font-size: 15px;
+      color: var(--dim)
+    }
+
+    figure {
+      margin: 28px 0
+    }
+
+    figure img {
+      max-width: 100%;
+      height: auto;
+      background: #fff;
+      border: 1px solid var(--line)
+    }
+
+    figcaption {
+      font-size: 14px;
+      color: var(--dim);
+      margin-top: 8px
+    }
+
+    .files {
+      list-style: none;
+      padding: 0
+    }
+
+    .files li {
+      margin-bottom: 6px
+    }
+
+    code {
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: .85em;
+      direction: ltr;
+      unicode-bidi: embed;
+      background: var(--card);
+      padding: 2px 6px
+    }
+
+    footer {
+      margin-top: 64px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      color: var(--dim);
+      font-size: 14px
+    }
+  </style>
 </head>
+
 <body>
-<div class="container">
+  <div class="wrap">
+    <nav aria-label="ניווט ראשי">
+      <a href="index.html" aria-current="page">הצעה לרפורמה בבחירות</a>
+      <a href="calendar.html">לוח שנה הולוצני</a>
+    </nav>
 
-  <header class="fade-1">
-    <div class="brand">Holocene · IFC</div>
-    <div class="brand-sub">לוח השנה ההולוצני</div>
-  </header>
+    <header>
+      <h1>תנאי כניסה של פיזור ארצי</h1>
+      <p class="by">הצעה לרפורמה בכניסת מפלגות לכנסת · טיוטה לדיון, 4 בנובמבר 2026 · בני קולנגייב</p>
+      <p class="rule">מפלגה נכנסת לכנסת רק אם היא עוברת 3.25% מהקולות ב-60% לפחות מהישובים והמועצות ברשימה קבועה.</p>
+    </header>
 
-  <section class="today fade-2">
-    <div class="today-label" id="todayLabel">
-      <span class="live-dot"></span>
-      <span id="todayLabelText">TODAY · היום</span>
-    </div>
-    <div class="today-month" id="todayMonth">—</div>
-    <div class="today-month-he" id="todayMonthHe"></div>
-    <div class="today-day" id="todayDay">—</div>
-    <div class="today-year"><span class="he-label">HE</span><span id="todayYear">—</span></div>
-    <div class="today-weekday" id="todayWeekday">—</div>
+    <main>
+      <h2>המטרה</h2>
+      <p>להקטין את כוחן של מפלגות מגזריות ולעודד התלכדות סביב מפלגות שמתמודדות בכל רחבי הארץ. ההצעה
+        <strong>אינה</strong> מציגה את עצמה כשיטה ניטרלית: היא בוחרת במפורש ביציבות ובכלל-ארציות על חשבון ייצוג של
+        מפלגות סקטורליות ו/או שהבוחרים שלהן מרוכזים גאוגרפית.
+      </p>
+      <p>מטרה נוספת: להקטין את ההשפעה של קניית קולות. קולות שנקנו בריכוז ביישובים ספורים אינם מאפשרים למפלגה לעמוד בתנאי
+        הפיזור, ולכן אינם יכולים להכניס אותה לכנסת.</p>
 
-    <div class="nav-controls">
-      <button class="nav-btn" onclick="navigate('month', -1)" title="חודש אחורה">
-        <span class="chev">‹‹</span><span>חודש</span>
-      </button>
-      <button class="nav-btn" onclick="navigate('day', -1)" title="יום אחורה">
-        <span class="chev">‹</span><span>יום</span>
-      </button>
-      <button class="nav-btn today-btn hidden" id="todayBtn" onclick="goToToday()">היום</button>
-      <button class="nav-btn" onclick="navigate('day', 1)" title="יום קדימה">
-        <span>יום</span><span class="chev">›</span>
-      </button>
-      <button class="nav-btn" onclick="navigate('month', 1)" title="חודש קדימה">
-        <span>חודש</span><span class="chev">››</span>
-      </button>
-    </div>
-  </section>
+      <h2>ההצעה</h2>
+      <ol>
+        <li><strong>רשימה קבועה של "שורות", שמוגדרת פעם אחת ואז מוקפאת:</strong>
+          <ul>
+            <li>כל יישוב מעל 10,000 תושבים הוא שורה בפני עצמו.</li>
+            <li>כל מועצה אזורית (כולל מועצות ישראליות ביהודה ושומרון) היא שורה אחת, ובה כל יישוביה.</li>
+            <li>כל המעטפות הכפולות מיוצגות בשורה אחת.</li>
+            <li>יישובים קטנים שאינם במועצה אזורית לא נמצאים ברשימה, אבל <strong>הקולות שלהם נספרים</strong> בחלוקת
+              המושבים.</li>
+          </ul>
+        </li>
+        <li><strong>תנאי כניסה:</strong> מפלגה נכנסת לכנסת רק אם היא עוברת 3.25% מהקולות <strong>ב-60% לפחות
+            מהשורות</strong>.</li>
+        <li><strong>חלוקת המושבים: ללא שינוי.</strong> ההצעה נוגעת רק בתנאי הכניסה ובבניית השורות. המושבים מחולקים בשיטה
+          הקיימת (באדר-עופר) בין המפלגות שעברו את התנאי, לפי <strong>כל הקולות בארץ</strong>.</li>
+      </ol>
 
-  <div class="divider fade-3"><span>EQUIVALENTS · מקבילות</span></div>
+      <h2>כללי הקפאת הרשימה</h2>
+      <p>כדי למנוע מניפולציות פוליטיות, הרשימה מוקפאת לאחר שהוגדרה, ומותרים בה רק שני שינויים. הכללים חלים על <strong>כל
+          השורות</strong>, יישובים ומועצות אזוריות כאחד.</p>
+      <ol>
+        <li><strong>פיצול:</strong> שורה שמתפצלת לשניים או יותר, רק החלק <strong>הגדול</strong> מביניהם נשאר שורה
+          ברשימה. הגודל נקבע לפי מספר התושבים <strong>ביום הפיצול</strong>. החלקים האחרים יוצאים מהרשימה, וקולותיהם
+          ממשיכים להיספר בחלוקת המושבים.</li>
+        <li><strong>איחוד:</strong> שורות שמתאחדות הופכות <strong>לשורה אחת</strong>. אם שורה שברשימה מתאחדת עם יישוב
+          שאינו ברשימה, השורה המאוחדת כוללת את כל הקולות של הישות החדשה.</li>
+      </ol>
+      <p>כל שינוי אחר אסור: אין הוספת שורות ואין הסרת שורות.</p>
 
-  <section class="equivalents fade-3">
-    <div class="equiv-card">
-      <div class="equiv-label">Gregorian</div>
-      <div class="equiv-value ltr" id="gregDate">—</div>
-    </div>
-    <div class="equiv-card">
-      <div class="equiv-label">תאריך עברי</div>
-      <div class="equiv-value" id="hebDate">—</div>
-    </div>
-  </section>
-
-  <section class="month-grid fade-4">
-    <div class="month-grid-header">
-      <div class="month-grid-title" id="monthGridTitle">—</div>
-      <div class="month-nav">
-        <button class="mini-btn" onclick="navigate('month', -1)" title="חודש קודם">‹</button>
-        <div class="month-grid-num" id="monthGridNum">—</div>
-        <button class="mini-btn" onclick="navigate('month', 1)" title="חודש הבא">›</button>
+      <h2>מה היה קורה בבחירות 2026</h2>
+      <div class="scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>מפלגה</th>
+              <th class="n">% קולות</th>
+              <th class="n">עוברת ב-% מהשורות</th>
+              <th class="n">מושבים בשיטה</th>
+              <th class="n">מושבים היום*</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="in">
+              <td>ליכוד</td>
+              <td class="n">20.5</td>
+              <td class="n">74.7</td>
+              <td class="n">48</td>
+              <td class="n">27</td>
+            </tr>
+            <tr class="in">
+              <td>ישר!</td>
+              <td class="n">16.1</td>
+              <td class="n">72.2</td>
+              <td class="n">37</td>
+              <td class="n">21</td>
+            </tr>
+            <tr class="in">
+              <td>יחד</td>
+              <td class="n">9.4</td>
+              <td class="n">64.6</td>
+              <td class="n">22</td>
+              <td class="n">12</td>
+            </tr>
+            <tr class="in">
+              <td>ישראל ביתנו</td>
+              <td class="n">5.9</td>
+              <td class="n">60.1</td>
+              <td class="n">13</td>
+              <td class="n">7</td>
+            </tr>
+            <tr class="out">
+              <td>עוצמה יהודית</td>
+              <td class="n">5.7</td>
+              <td class="n">55.6</td>
+              <td class="n">0</td>
+              <td class="n">7</td>
+            </tr>
+            <tr class="out">
+              <td>הדמוקרטים</td>
+              <td class="n">6.4</td>
+              <td class="n">49.0</td>
+              <td class="n">0</td>
+              <td class="n">8</td>
+            </tr>
+            <tr class="out">
+              <td>ציונות דתית</td>
+              <td class="n">5.1</td>
+              <td class="n">45.5</td>
+              <td class="n">0</td>
+              <td class="n">6</td>
+            </tr>
+            <tr class="out">
+              <td>המשותפת</td>
+              <td class="n">8.8</td>
+              <td class="n">32.8</td>
+              <td class="n">0</td>
+              <td class="n">11</td>
+            </tr>
+            <tr class="out">
+              <td>ש"ס</td>
+              <td class="n">5.3</td>
+              <td class="n">31.8</td>
+              <td class="n">0</td>
+              <td class="n">7</td>
+            </tr>
+            <tr class="out">
+              <td>רע"ם</td>
+              <td class="n">5.9</td>
+              <td class="n">30.8</td>
+              <td class="n">0</td>
+              <td class="n">7</td>
+            </tr>
+            <tr class="out">
+              <td>יהדות התורה</td>
+              <td class="n">5.5</td>
+              <td class="n">15.2</td>
+              <td class="n">0</td>
+              <td class="n">7</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </div>
-    <div class="weekdays">
-      <div class="weekday">Sun</div>
-      <div class="weekday">Mon</div>
-      <div class="weekday">Tue</div>
-      <div class="weekday">Wed</div>
-      <div class="weekday">Thu</div>
-      <div class="weekday">Fri</div>
-      <div class="weekday shabbat">Sat</div>
-    </div>
-    <div class="days" id="daysGrid"></div>
-  </section>
+      <p class="note">* קירוב: אחוז חסימה 3.25%, בלי הסכמי עודפים. בלי הסכמי עודפים באדר-עופר נותנת בבחירות האלה את אותה
+        תוצאה כמו דהונדט (נבדק), ולכן החישוב משתמש בדהונדט. הסכמי עודפים עשויים להזיז מושב או שניים. 198 שורות, 119
+        נדרשות. <strong>48.2% מהקולות הולכים למפלגות בלי מושבים</strong> (חישוב סטטי, בלי שינוי בהצבעה).</p>
+      <figure><img src="assets/seats_comparison.png" alt="גרף עמודות: מושבים לפי מפלגה במערכת הנוכחית ובשיטה המוצעת"
+          width="1650" height="750">
+        <figcaption>מושבים במערכת הנוכחית (קירוב) לעומת השיטה המוצעת, לפי תוצאות 2026.</figcaption>
+      </figure>
 
-  <div class="divider fade-5"><span>YEAR · 13 MONTHS · שנה</span></div>
+      <h2>מחירים ומגבלות</h2>
+      <ul>
+        <li><strong>הקפאה:</strong> הרשימה חסינה מתמרוני גבולות, ושינוי בה אפשרי רק בפיצול או באיחוד לפי הכללים לעיל.
+          מנגד, היא קפואה מול שינויים דמוגרפיים: יישוב שגדל מעבר ל-10,000 תושבים אחרי ההקפאה לא נכנס לרשימה, ויישוב
+          שהצטמצם נשאר בה.</li>
+      </ul>
 
-  <section class="year-overview fade-5" id="yearOverview"></section>
-
-  <section class="converter fade-6">
-    <div class="converter-title">Convert</div>
-    <div class="converter-subtitle">המרת תאריך גרגוריאני ללוח החדש ולעברי</div>
-    <input type="date" id="convertInput">
-    <div class="converter-result" id="convertResult"></div>
-  </section>
-
-  <footer class="fade-6">
-    <div class="footer-line">
-      <span>bekulio</span><span class="dot">·</span><span id="footerYear">12026</span><span class="dot">·</span><span>HE</span>
-    </div>
-    <div class="footer-note">
-      13 חודשים של 28 ימים. יום השנה בסוף השנה ויום העיבור באמצעה אינם שייכים לאף יום בשבוע. כל חודש מתחיל ביום ראשון.
-    </div>
-  </footer>
-
-</div>
-
-<script>
-  const MONTHS_EN = ['January','February','March','April','May','June','Sol','July','August','September','October','November','December'];
-  const MONTHS_HE = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','סול','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
-  const WEEKDAYS_HE = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
-
-  let viewedDate = new Date();
-  viewedDate.setHours(12, 0, 0, 0); // noon to avoid DST surprises
-
-  function isLeapYear(y) { return y % 4 === 0; }
-
-  function dayOfYear(date) {
-    const start = Date.UTC(date.getFullYear(), 0, 1);
-    const current = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
-    return Math.floor((current - start) / 86400000) + 1;
-  }
-
-  function gregToIFC(date) {
-    const gregYear = date.getFullYear();
-    const ifcYear = gregYear + 10000;
-    const doy = dayOfYear(date);
-    const leap = isLeapYear(gregYear);
-    const yearLength = leap ? 366 : 365;
-
-    if (doy === yearLength) return { year: ifcYear, monthIndex: null, day: null, special: 'year' };
-    if (leap && doy === 169) return { year: ifcYear, monthIndex: null, day: null, special: 'leap' };
-
-    let adjusted = doy;
-    if (leap && doy > 169) adjusted -= 1;
-
-    const monthIndex = Math.floor((adjusted - 1) / 28);
-    const day = ((adjusted - 1) % 28) + 1;
-    return { year: ifcYear, monthIndex, day, special: null };
-  }
-
-  function ifcToGreg(ifcYear, monthIndex, day) {
-    const gregYear = ifcYear - 10000;
-    const leap = isLeapYear(gregYear);
-    let doy = monthIndex * 28 + day;
-    if (leap && monthIndex >= 6) doy += 1; // skip past leap day insertion
-    const d = new Date(gregYear, 0, doy);
-    d.setHours(12, 0, 0, 0);
-    return d;
-  }
-
-  function getHebrewDate(date) {
-    try {
-      return new Intl.DateTimeFormat('he-u-ca-hebrew', {
-        day: 'numeric', month: 'long', year: 'numeric'
-      }).format(date);
-    } catch (e) { return '—'; }
-  }
-
-  function getGregorianFormatted(date) {
-    return new Intl.DateTimeFormat('en-GB', {
-      day: 'numeric', month: 'long', year: 'numeric'
-    }).format(date);
-  }
-
-  function weekdayName(day) { return WEEKDAYS_HE[(day - 1) % 7]; }
-  function weekdayIndex(day) { return (day - 1) % 7; }
-
-  function isSameDay(a, b) {
-    return a.getFullYear() === b.getFullYear() &&
-           a.getMonth() === b.getMonth() &&
-           a.getDate() === b.getDate();
-  }
-
-  function navigate(unit, direction) {
-    const ifc = gregToIFC(viewedDate);
-
-    if (unit === 'day') {
-      const d = new Date(viewedDate);
-      d.setDate(d.getDate() + direction);
-      viewedDate = d;
-    } else if (unit === 'month') {
-      if (ifc.special) {
-        // from special day, approximate ±28 days
-        const d = new Date(viewedDate);
-        d.setDate(d.getDate() + direction * 28);
-        viewedDate = d;
-      } else {
-        let targetMonth = ifc.monthIndex + direction;
-        let targetYear = ifc.year;
-        let targetDay = ifc.day;
-        if (targetMonth > 12) { targetMonth = 0; targetYear += 1; }
-        if (targetMonth < 0) { targetMonth = 12; targetYear -= 1; }
-        viewedDate = ifcToGreg(targetYear, targetMonth, targetDay);
-      }
-    }
-    render();
-  }
-
-  function goToToday() {
-    viewedDate = new Date();
-    viewedDate.setHours(12, 0, 0, 0);
-    render();
-  }
-
-  function jumpToDate(date) {
-    viewedDate = new Date(date);
-    viewedDate.setHours(12, 0, 0, 0);
-    render();
-  }
-
-  function render() {
-    const ifc = gregToIFC(viewedDate);
-    const now = new Date();
-    const isToday = isSameDay(viewedDate, now);
-    const realToday = gregToIFC(now);
-
-    // hero label
-    const labelEl = document.getElementById('todayLabel');
-    const labelTextEl = document.getElementById('todayLabelText');
-    if (isToday) {
-      labelEl.classList.remove('viewing');
-      labelTextEl.textContent = 'TODAY · היום';
-    } else {
-      labelEl.classList.add('viewing');
-      labelTextEl.textContent = 'VIEWING · בתצוגה';
-    }
-
-    // today button
-    document.getElementById('todayBtn').classList.toggle('hidden', isToday);
-
-    const monthEl = document.getElementById('todayMonth');
-    const monthHeEl = document.getElementById('todayMonthHe');
-    const dayEl = document.getElementById('todayDay');
-    const yearEl = document.getElementById('todayYear');
-    const wdEl = document.getElementById('todayWeekday');
-
-    dayEl.classList.remove('special');
-
-    if (ifc.special === 'year') {
-      monthEl.textContent = 'Year Day';
-      monthHeEl.textContent = 'יום השנה';
-      dayEl.textContent = '★';
-      dayEl.classList.add('special');
-      wdEl.textContent = 'יום חג — לא שייך לחודש או ליום בשבוע';
-    } else if (ifc.special === 'leap') {
-      monthEl.textContent = 'Leap Day';
-      monthHeEl.textContent = 'יום העיבור';
-      dayEl.textContent = '✦';
-      dayEl.classList.add('special');
-      wdEl.textContent = 'יום חג — מופיע רק בשנה מעוברת';
-    } else {
-      monthEl.textContent = MONTHS_EN[ifc.monthIndex];
-      monthHeEl.textContent = MONTHS_HE[ifc.monthIndex];
-      dayEl.textContent = ifc.day;
-      wdEl.textContent = 'יום ' + weekdayName(ifc.day);
-    }
-
-    yearEl.textContent = ifc.year;
-    document.getElementById('footerYear').textContent = realToday.year;
-
-    document.getElementById('gregDate').textContent = getGregorianFormatted(viewedDate);
-    document.getElementById('hebDate').textContent = getHebrewDate(viewedDate);
-
-    renderMonth(ifc, realToday);
-    renderYearOverview(ifc);
-  }
-
-  function renderMonth(ifc, realToday) {
-    const titleEl = document.getElementById('monthGridTitle');
-    const numEl = document.getElementById('monthGridNum');
-    const gridEl = document.getElementById('daysGrid');
-
-    if (ifc.special) {
-      titleEl.innerHTML = (ifc.special === 'year' ? 'Year Day' : 'Leap Day') +
-                         ' <span class="he">' + (ifc.special === 'year' ? 'יום השנה' : 'יום העיבור') + '</span>';
-      numEl.textContent = 'INTER';
-      gridEl.innerHTML = '<div style="grid-column: 1 / -1; padding: 32px 0; text-align: center; font-family: var(--serif-he); color: var(--ink-dim); font-size: 14px;">יום בודד מחוץ למחזור</div>';
-      return;
-    }
-
-    titleEl.innerHTML = MONTHS_EN[ifc.monthIndex] + ' <span class="he">' + MONTHS_HE[ifc.monthIndex] + '</span>';
-    numEl.textContent = String(ifc.monthIndex + 1).padStart(2, '0') + '/13';
-
-    gridEl.innerHTML = '';
-    for (let d = 1; d <= 28; d++) {
-      const cell = document.createElement('div');
-      cell.className = 'day';
-      if (weekdayIndex(d) === 6) cell.classList.add('shabbat');
-      if (d === ifc.day) cell.classList.add('current');
-      // mark real "today" if it falls in this viewed month
-      if (!realToday.special &&
-          realToday.year === ifc.year &&
-          realToday.monthIndex === ifc.monthIndex &&
-          realToday.day === d &&
-          d !== ifc.day) {
-        cell.classList.add('is-today-real');
-      }
-      cell.textContent = String(d).padStart(2, '0');
-      cell.onclick = () => {
-        const newDate = ifcToGreg(ifc.year, ifc.monthIndex, d);
-        jumpToDate(newDate);
-      };
-      gridEl.appendChild(cell);
-    }
-  }
-
-  function renderYearOverview(ifc) {
-    const container = document.getElementById('yearOverview');
-    container.innerHTML = '';
-    for (let i = 0; i < 13; i++) {
-      const tile = document.createElement('div');
-      tile.className = 'month-tile';
-      if (!ifc.special && ifc.monthIndex === i) tile.classList.add('current');
-      if (i === 6) tile.classList.add('sol');
-      tile.innerHTML =
-        '<div class="month-tile-num">' + String(i + 1).padStart(2, '0') + '</div>' +
-        '<div class="month-tile-name">' + MONTHS_HE[i] + '</div>';
-      tile.onclick = () => {
-        const targetYear = ifc.special ? (ifc.year) : ifc.year;
-        const targetDay = (ifc.special || ifc.day > 28) ? 1 : ifc.day;
-        jumpToDate(ifcToGreg(targetYear, i, targetDay));
-      };
-      container.appendChild(tile);
-    }
-  }
-
-  function setupConverter() {
-    const input = document.getElementById('convertInput');
-    const result = document.getElementById('convertResult');
-
-    const today = new Date();
-    const pad = (n) => String(n).padStart(2, '0');
-    input.value = today.getFullYear() + '-' + pad(today.getMonth() + 1) + '-' + pad(today.getDate());
-
-    function update() {
-      const val = input.value;
-      if (!val) { result.innerHTML = ''; return; }
-      const [y, m, d] = val.split('-').map(Number);
-      const date = new Date(y, m - 1, d);
-      const ifc = gregToIFC(date);
-
-      let ifcStr;
-      if (ifc.special === 'year') ifcStr = 'יום השנה · ' + ifc.year + ' HE';
-      else if (ifc.special === 'leap') ifcStr = 'יום העיבור · ' + ifc.year + ' HE';
-      else ifcStr = ifc.day + ' ' + MONTHS_HE[ifc.monthIndex] + ' ' + ifc.year + ' HE';
-
-      result.innerHTML =
-        '<div class="converter-result-row">' +
-          '<div class="converter-result-label">IFC</div>' +
-          '<div class="converter-result-value primary">' + ifcStr + '</div>' +
-        '</div>' +
-        '<div class="converter-result-row">' +
-          '<div class="converter-result-label">GREG</div>' +
-          '<div class="converter-result-value">' + getGregorianFormatted(date) + '</div>' +
-        '</div>' +
-        '<div class="converter-result-row">' +
-          '<div class="converter-result-label">HEB</div>' +
-          '<div class="converter-result-value">' + getHebrewDate(date) + '</div>' +
-        '</div>';
-    }
-
-    input.addEventListener('change', update);
-    input.addEventListener('input', update);
-    update();
-  }
-
-  // keyboard nav
-  document.addEventListener('keydown', (e) => {
-    if (e.target.tagName === 'INPUT') return;
-    if (e.key === 'ArrowRight') { navigate('day', -1); e.preventDefault(); }
-    else if (e.key === 'ArrowLeft') { navigate('day', 1); e.preventDefault(); }
-    else if (e.key === 'ArrowUp') { navigate('month', -1); e.preventDefault(); }
-    else if (e.key === 'ArrowDown') { navigate('month', 1); e.preventDefault(); }
-    else if (e.key === 't' || e.key === 'T' || e.key === 'ה') { goToToday(); e.preventDefault(); }
-  });
-
-  render();
-  setupConverter();
-</script>
+      <h2>שחזור</h2>
+      <p>הקוד והנתונים פתוחים. הרצה מתוך תיקיית <code>simulation</code>: <code>python final_simulation.py</code></p>
+      <ul class="files">
+        <li><a href="simulation/final_simulation.py">final_simulation.py</a> · הסימולציה</li>
+        <li><a href="simulation/expc_1.csv">expc_1.csv</a> · תוצאות הבחירות ברמת יישוב, ועדת הבחירות המרכזית</li>
+        <li><a href="simulation/downloadFile.xlsx">downloadFile.xlsx</a> · נתוני יישובים, הלמ"ס</li>
+        <li><a href="https://github.com/bekulio/bekulio.github.io/tree/main/simulation">כל הקבצים ב-GitHub</a></li>
+      </ul>
+    </main>
+    <footer><a href="calendar.html">לוח השנה ההולוצני</a></footer>
+  </div>
 </body>
+
 </html>
