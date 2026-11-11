@@ -1,1178 +1,1086 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>לוח השנה ההולוצני · 12026 HE</title>
-  <meta name="description" content="לוח השנה ההולוצני — מערכת תאריכים חלופית מבוססת IFC עם 13 חודשים של 28 ימים">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,200;9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@300;400;500;700&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&display=swap"
-    rel="stylesheet">
-  <style>
-    :root {
-      --bg: #181d27;
-      --bg-elevated: #232938;
-      --bg-input: #131722;
-      --ink: #f0e6d2;
-      --ink-dim: #8c8472;
-      --accent: #d4a456;
-      --accent-bright: #e8c178;
-      --accent-deep: #8a6a35;
-      --line: rgba(212, 164, 86, 0.22);
-      --line-strong: rgba(212, 164, 86, 0.45);
-      --serif: 'Fraunces', serif;
-      --serif-he: 'Frank Ruhl Libre', serif;
-      --mono: 'JetBrains Mono', monospace;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html,
-    body {
-      min-height: 100%;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--ink);
-      font-family: var(--serif-he);
-      font-size: 16px;
-      line-height: 1.5;
-      background-image:
-        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(212, 164, 86, 0.10) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 40% at 50% 100%, rgba(212, 164, 86, 0.05) 0%, transparent 60%);
-      position: relative;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        linear-gradient(rgba(212, 164, 86, 0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(212, 164, 86, 0.025) 1px, transparent 1px);
-      background-size: 64px 64px;
-      z-index: 0;
-      mask-image: radial-gradient(ellipse at center, black 30%, transparent 90%);
-    }
-
-    .container {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 28px 22px 56px;
-      position: relative;
-      z-index: 1;
-    }
-
-    header {
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 14px;
-      margin-bottom: 36px;
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .brand {
-      font-family: var(--serif);
-      font-weight: 300;
-      font-size: 13px;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--accent);
-    }
-
-    .brand-sub {
-      font-family: var(--serif-he);
-      font-weight: 300;
-      font-size: 13px;
-      color: var(--ink-dim);
-      letter-spacing: 0.04em;
-    }
-
-    /* hero */
-    .today {
-      margin: 40px 0 24px;
-      text-align: center;
-      position: relative;
-    }
-
-    .today::before,
-    .today::after {
-      content: '';
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 24px;
-      height: 1px;
-      background: var(--accent);
-    }
-
-    .today::before {
-      top: -20px;
-    }
-
-    .today-label {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.32em;
-      color: var(--ink-dim);
-      text-transform: uppercase;
-      margin-bottom: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .today-label .live-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 8px var(--accent);
-      animation: pulse 2.4s ease-in-out infinite;
-    }
-
-    .today-label.viewing .live-dot {
-      background: var(--ink-dim);
-      box-shadow: none;
-      animation: none;
-    }
-
-    @keyframes pulse {
-
-      0%,
-      100% {
-        opacity: 0.5;
-      }
-
-      50% {
-        opacity: 1;
-      }
-    }
-
-    .today-month {
-      font-family: var(--serif);
-      font-weight: 300;
-      font-style: italic;
-      font-size: clamp(26px, 5.5vw, 38px);
-      color: var(--accent);
-      letter-spacing: 0.02em;
-      line-height: 1.1;
-    }
-
-    .today-month-he {
-      font-family: var(--serif-he);
-      font-weight: 400;
-      font-size: clamp(15px, 3vw, 18px);
-      color: var(--ink-dim);
-      margin-top: 4px;
-      letter-spacing: 0.05em;
-    }
-
-    .today-day {
-      font-family: var(--serif);
-      font-weight: 200;
-      font-size: clamp(108px, 26vw, 196px);
-      line-height: 0.85;
-      color: var(--ink);
-      letter-spacing: -0.05em;
-      margin: 14px 0;
-      font-feature-settings: "lnum";
-    }
-
-    .today-day.special {
-      font-style: italic;
-      font-size: clamp(48px, 11vw, 80px);
-      letter-spacing: 0;
-      line-height: 1;
-      padding: 24px 0;
-    }
-
-    .today-year {
-      font-family: var(--mono);
-      font-size: clamp(13px, 2.6vw, 16px);
-      color: var(--ink-dim);
-      letter-spacing: 0.22em;
-      margin-top: 12px;
-    }
-
-    .today-year .he-label {
-      color: var(--accent);
-      margin-right: 4px;
-    }
-
-    .today-weekday {
-      font-family: var(--serif-he);
-      font-weight: 400;
-      font-size: 17px;
-      color: var(--accent-bright);
-      margin-top: 20px;
-      letter-spacing: 0.03em;
-    }
-
-    /* navigation controls */
-    .nav-controls {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 4px;
-      margin-top: 28px;
-      flex-wrap: wrap;
-    }
-
-    .nav-btn {
-      background: transparent;
-      border: 1px solid var(--line);
-      color: var(--ink);
-      font-family: var(--serif-he);
-      font-size: 13px;
-      padding: 9px 14px;
-      cursor: pointer;
-      transition: all 0.15s;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      min-height: 38px;
-      letter-spacing: 0.02em;
-    }
-
-    .nav-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent-bright);
-      background: rgba(212, 164, 86, 0.06);
-    }
-
-    .nav-btn:active {
-      transform: translateY(1px);
-    }
-
-    .nav-btn .chev {
-      font-family: var(--mono);
-      font-size: 14px;
-      color: var(--ink-dim);
-      line-height: 1;
-    }
-
-    .nav-btn:hover .chev {
-      color: var(--accent);
-    }
-
-    .nav-btn.today-btn {
-      background: var(--accent);
-      color: var(--bg);
-      border-color: var(--accent);
-      font-weight: 500;
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      padding: 9px 16px;
-    }
-
-    .nav-btn.today-btn:hover {
-      background: var(--accent-bright);
-      color: var(--bg);
-    }
-
-    .nav-btn.today-btn.hidden {
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    /* divider */
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      margin: 40px 0 22px;
-    }
-
-    .divider::before,
-    .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--line) 30%, var(--line) 70%, transparent);
-    }
-
-    .divider span {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.32em;
-      color: var(--ink-dim);
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    /* equivalents */
-    .equivalents {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 36px;
-    }
-
-    .equiv-card {
-      background: var(--bg-elevated);
-      border: 1px solid var(--line);
-      padding: 18px 18px 20px;
-      position: relative;
-    }
-
-    .equiv-card::before {
-      content: '';
-      position: absolute;
-      top: -1px;
-      right: -1px;
-      width: 10px;
-      height: 10px;
-      border-top: 1px solid var(--accent);
-      border-right: 1px solid var(--accent);
-    }
-
-    .equiv-card::after {
-      content: '';
-      position: absolute;
-      bottom: -1px;
-      left: -1px;
-      width: 10px;
-      height: 10px;
-      border-bottom: 1px solid var(--accent);
-      border-left: 1px solid var(--accent);
-    }
-
-    .equiv-label {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.28em;
-      color: var(--ink-dim);
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    .equiv-value {
-      font-family: var(--serif-he);
-      font-size: 17px;
-      font-weight: 400;
-      color: var(--ink);
-      line-height: 1.3;
-    }
-
-    .equiv-value.ltr {
-      font-family: var(--serif);
-      font-style: italic;
-      font-weight: 300;
-      direction: ltr;
-      text-align: right;
-    }
-
-    /* month grid */
-    .month-grid {
-      background: var(--bg-elevated);
-      border: 1px solid var(--line);
-      padding: 22px;
-      margin-bottom: 36px;
-      position: relative;
-    }
-
-    .month-grid::before {
-      content: '';
-      position: absolute;
-      top: -1px;
-      right: -1px;
-      width: 12px;
-      height: 12px;
-      border-top: 1px solid var(--accent);
-      border-right: 1px solid var(--accent);
-    }
-
-    .month-grid-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 14px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--line);
-      gap: 8px;
-    }
-
-    .month-grid-title {
-      font-family: var(--serif);
-      font-style: italic;
-      font-weight: 300;
-      font-size: 22px;
-      color: var(--accent);
-    }
-
-    .month-grid-title .he {
-      font-family: var(--serif-he);
-      font-style: normal;
-      color: var(--ink-dim);
-      font-size: 16px;
-      margin-right: 8px;
-    }
-
-    .month-grid-num {
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--ink-dim);
-      letter-spacing: 0.18em;
-    }
-
-    .month-nav {
-      display: flex;
-      gap: 4px;
-      align-items: center;
-    }
-
-    .mini-btn {
-      background: transparent;
-      border: 1px solid var(--line);
-      color: var(--ink-dim);
-      font-family: var(--mono);
-      font-size: 12px;
-      width: 30px;
-      height: 30px;
-      cursor: pointer;
-      transition: all 0.15s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1;
-    }
-
-    .mini-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .weekdays {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 4px;
-      margin-bottom: 6px;
-    }
-
-    .weekday {
-      font-family: var(--mono);
-      font-size: 9px;
-      text-align: center;
-      color: var(--ink-dim);
-      letter-spacing: 0.12em;
-      padding: 8px 0;
-      text-transform: uppercase;
-    }
-
-    .weekday.shabbat {
-      color: var(--accent-deep);
-    }
-
-    .days {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 4px;
-    }
-
-    .day {
-      font-family: var(--mono);
-      font-size: 13px;
-      text-align: center;
-      padding: 12px 0;
-      color: var(--ink);
-      border: 1px solid transparent;
-      transition: all 0.15s;
-      background: rgba(255, 255, 255, 0.015);
-      cursor: pointer;
-    }
-
-    .day:hover {
-      border-color: var(--line-strong);
-      background: rgba(212, 164, 86, 0.04);
-    }
-
-    .day.current {
-      border-color: var(--accent);
-      color: var(--accent-bright);
-      background: rgba(212, 164, 86, 0.10);
-      font-weight: 600;
-    }
-
-    .day.is-today-real {
-      box-shadow: inset 0 0 0 1px var(--accent);
-    }
-
-    .day.shabbat {
-      color: var(--accent-deep);
-    }
-
-    /* year overview */
-    .year-overview {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
-      gap: 6px;
-      margin-bottom: 36px;
-    }
-
-    .month-tile {
-      background: var(--bg-elevated);
-      border: 1px solid var(--line);
-      padding: 14px 6px 12px;
-      text-align: center;
-      transition: all 0.15s;
-      cursor: pointer;
-    }
-
-    .month-tile:hover {
-      border-color: var(--line-strong);
-    }
-
-    .month-tile.current {
-      border-color: var(--accent);
-      background: rgba(212, 164, 86, 0.10);
-    }
-
-    .month-tile-num {
-      font-family: var(--mono);
-      font-size: 9px;
-      color: var(--ink-dim);
-      letter-spacing: 0.15em;
-    }
-
-    .month-tile-name {
-      font-family: var(--serif-he);
-      font-size: 13px;
-      margin-top: 4px;
-      color: var(--ink);
-      font-weight: 400;
-    }
-
-    .month-tile.current .month-tile-name {
-      color: var(--accent-bright);
-    }
-
-    .month-tile.atnahta {
-      border-style: dashed;
-    }
-
-    /* converter */
-    .converter {
-      background: var(--bg-elevated);
-      border: 1px solid var(--line);
-      padding: 22px;
-      margin-bottom: 28px;
-      position: relative;
-    }
-
-    .converter::before {
-      content: '';
-      position: absolute;
-      top: -1px;
-      right: -1px;
-      width: 12px;
-      height: 12px;
-      border-top: 1px solid var(--accent);
-      border-right: 1px solid var(--accent);
-    }
-
-    .converter::after {
-      content: '';
-      position: absolute;
-      bottom: -1px;
-      left: -1px;
-      width: 12px;
-      height: 12px;
-      border-bottom: 1px solid var(--accent);
-      border-left: 1px solid var(--accent);
-    }
-
-    .converter-title {
-      font-family: var(--serif);
-      font-style: italic;
-      font-weight: 300;
-      font-size: 22px;
-      color: var(--accent);
-      margin-bottom: 4px;
-    }
-
-    .converter-subtitle {
-      font-family: var(--serif-he);
-      font-size: 13px;
-      color: var(--ink-dim);
-      margin-bottom: 16px;
-    }
-
-    .converter input[type="date"] {
-      background: var(--bg-input);
-      border: 1px solid var(--line);
-      color: var(--ink);
-      font-family: var(--mono);
-      font-size: 14px;
-      padding: 12px 14px;
-      width: 100%;
-      outline: none;
-      color-scheme: dark;
-      direction: ltr;
-      text-align: left;
-    }
-
-    .converter input[type="date"]:focus {
-      border-color: var(--accent);
-    }
-
-    .converter-result {
-      margin-top: 16px;
-      padding-top: 14px;
-      border-top: 1px dashed var(--line);
-    }
-
-    .converter-result-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 0;
-      border-bottom: 1px dotted rgba(212, 164, 86, 0.10);
-    }
-
-    .converter-result-row:last-child {
-      border-bottom: none;
-    }
-
-    .converter-result-label {
-      font-family: var(--mono);
-      color: var(--ink-dim);
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
-    .converter-result-value {
-      font-family: var(--serif-he);
-      color: var(--ink);
-      font-size: 15px;
-      text-align: left;
-      direction: ltr;
-    }
-
-    .converter-result-value.primary {
-      color: var(--accent-bright);
-      font-size: 16px;
-    }
-
-    /* footer */
-    footer {
-      text-align: center;
-      margin-top: 48px;
-      padding-top: 28px;
-      border-top: 1px solid var(--line);
-    }
-
-    .footer-line {
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--ink-dim);
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-    }
-
-    .footer-line .dot {
-      color: var(--accent);
-      margin: 0 8px;
-    }
-
-    .footer-note {
-      font-family: var(--serif-he);
-      font-size: 12px;
-      color: var(--ink-dim);
-      margin-top: 10px;
-      line-height: 1.6;
-      max-width: 480px;
-      margin-inline: auto;
-    }
-
-    @media (max-width: 540px) {
-      .equivalents {
-        grid-template-columns: 1fr;
-      }
-
-      .day {
-        font-size: 12px;
-        padding: 10px 0;
-      }
-
-      .weekday {
-        font-size: 9px;
-      }
-
-      .month-grid-title {
-        font-size: 18px;
-      }
-
-      .month-grid-title .he {
-        font-size: 14px;
-      }
-
-      .nav-btn {
-        font-size: 12px;
-        padding: 8px 11px;
-      }
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(6px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .fade-1 {
-      animation: fadeIn 0.7s ease 0.00s both;
-    }
-
-    .fade-2 {
-      animation: fadeIn 0.7s ease 0.10s both;
-    }
-
-    .fade-3 {
-      animation: fadeIn 0.7s ease 0.25s both;
-    }
-
-    .fade-4 {
-      animation: fadeIn 0.7s ease 0.40s both;
-    }
-
-    .fade-5 {
-      animation: fadeIn 0.7s ease 0.55s both;
-    }
-
-    .fade-6 {
-      animation: fadeIn 0.7s ease 0.70s both;
-    }
-
-    .site-nav {
-      display: flex;
-      gap: 6px;
-      border-bottom: 1px solid var(--line);
-      padding-top: 4px;
-      margin-bottom: 28px
-    }
-
-    .site-nav a {
-      padding: 10px 22px;
-      text-decoration: none;
-      color: var(--ink-dim);
-      border: 1px solid transparent;
-      border-bottom: 0;
-      font-size: 15px
-    }
-
-    .site-nav a[aria-current=page] {
-      color: var(--ink);
-      border-color: var(--line);
-      background: var(--bg-elevated);
-      font-weight: 700
-    }
-
-    .site-nav a:hover {
-      color: var(--accent-bright)
-    }
-
-    .site-nav a:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 3px
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>לוח השנה ההולוצני · 12026 HE</title>
+<meta name="description" content="לוח השנה ההולוצני — מערכת תאריכים חלופית מבוססת IFC עם 13 חודשים של 28 ימים">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,200;9..144,300;9..144,400;9..144,600&family=JetBrains+Mono:wght@300;400;500;700&family=Frank+Ruhl+Libre:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #181d27;
+    --bg-elevated: #232938;
+    --bg-input: #131722;
+    --ink: #f0e6d2;
+    --ink-dim: #8c8472;
+    --accent: #d4a456;
+    --accent-bright: #e8c178;
+    --accent-deep: #8a6a35;
+    --line: rgba(212, 164, 86, 0.22);
+    --line-strong: rgba(212, 164, 86, 0.45);
+    --serif: 'Fraunces', serif;
+    --serif-he: 'Frank Ruhl Libre', serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { min-height: 100%; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif-he);
+    font-size: 16px;
+    line-height: 1.5;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(212, 164, 86, 0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 50% 100%, rgba(212, 164, 86, 0.05) 0%, transparent 60%);
+    position: relative;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(212, 164, 86, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212, 164, 86, 0.025) 1px, transparent 1px);
+    background-size: 64px 64px;
+    z-index: 0;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 90%);
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 28px 22px 56px;
+    position: relative;
+    z-index: 1;
+  }
+
+  header {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 14px;
+    margin-bottom: 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .brand {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: 13px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .brand-sub {
+    font-family: var(--serif-he);
+    font-weight: 300;
+    font-size: 13px;
+    color: var(--ink-dim);
+    letter-spacing: 0.04em;
+  }
+
+  /* hero */
+  .today {
+    margin: 40px 0 24px;
+    text-align: center;
+    position: relative;
+  }
+
+  .today::before, .today::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+  .today::before { top: -20px; }
+
+  .today-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .today-label .live-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+
+  .today-label.viewing .live-dot {
+    background: var(--ink-dim);
+    box-shadow: none;
+    animation: none;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  .today-month {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(26px, 5.5vw, 38px);
+    color: var(--accent);
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+  }
+
+  .today-month-he {
+    font-family: var(--serif-he);
+    font-weight: 400;
+    font-size: clamp(15px, 3vw, 18px);
+    color: var(--ink-dim);
+    margin-top: 4px;
+    letter-spacing: 0.05em;
+  }
+
+  .today-day {
+    font-family: var(--serif);
+    font-weight: 200;
+    font-size: clamp(108px, 26vw, 196px);
+    line-height: 0.85;
+    color: var(--ink);
+    letter-spacing: -0.05em;
+    margin: 14px 0;
+    font-feature-settings: "lnum";
+  }
+
+  .today-day.special {
+    font-style: italic;
+    font-size: clamp(48px, 11vw, 80px);
+    letter-spacing: 0;
+    line-height: 1;
+    padding: 24px 0;
+  }
+
+  .today-year {
+    font-family: var(--mono);
+    font-size: clamp(13px, 2.6vw, 16px);
+    color: var(--ink-dim);
+    letter-spacing: 0.22em;
+    margin-top: 12px;
+  }
+
+  .today-year .he-label {
+    color: var(--accent);
+    margin-right: 4px;
+  }
+
+  .today-weekday {
+    font-family: var(--serif-he);
+    font-weight: 400;
+    font-size: 17px;
+    color: var(--accent-bright);
+    margin-top: 20px;
+    letter-spacing: 0.03em;
+  }
+
+  /* navigation controls */
+  .nav-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .nav-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: var(--serif-he);
+    font-size: 13px;
+    padding: 9px 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 38px;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent-bright);
+    background: rgba(212, 164, 86, 0.06);
+  }
+
+  .nav-btn:active {
+    transform: translateY(1px);
+  }
+
+  .nav-btn .chev {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--ink-dim);
+    line-height: 1;
+  }
+
+  .nav-btn:hover .chev { color: var(--accent); }
+
+  .nav-btn.today-btn {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+    font-weight: 500;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 9px 16px;
+  }
+
+  .nav-btn.today-btn:hover {
+    background: var(--accent-bright);
+    color: var(--bg);
+  }
+
+  .nav-btn.today-btn.hidden {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  /* divider */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin: 40px 0 22px;
+  }
+
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--line) 30%, var(--line) 70%, transparent);
+  }
+
+  .divider span {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* equivalents */
+  .equivalents {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 36px;
+  }
+
+  .equiv-card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--line);
+    padding: 18px 18px 20px;
+    position: relative;
+  }
+
+  .equiv-card::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 10px;
+    height: 10px;
+    border-top: 1px solid var(--accent);
+    border-right: 1px solid var(--accent);
+  }
+  .equiv-card::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: -1px;
+    width: 10px;
+    height: 10px;
+    border-bottom: 1px solid var(--accent);
+    border-left: 1px solid var(--accent);
+  }
+
+  .equiv-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .equiv-value {
+    font-family: var(--serif-he);
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+
+  .equiv-value.ltr {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    direction: ltr;
+    text-align: right;
+  }
+
+  /* month grid */
+  .month-grid {
+    background: var(--bg-elevated);
+    border: 1px solid var(--line);
+    padding: 22px;
+    margin-bottom: 36px;
+    position: relative;
+  }
+
+  .month-grid::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 12px;
+    height: 12px;
+    border-top: 1px solid var(--accent);
+    border-right: 1px solid var(--accent);
+  }
+
+  .month-grid-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    gap: 8px;
+  }
+
+  .month-grid-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 22px;
+    color: var(--accent);
+  }
+
+  .month-grid-title .he {
+    font-family: var(--serif-he);
+    font-style: normal;
+    color: var(--ink-dim);
+    font-size: 16px;
+    margin-right: 8px;
+  }
+
+  .month-grid-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.18em;
+  }
+
+  .month-nav {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .mini-btn {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink-dim);
+    font-family: var(--mono);
+    font-size: 12px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .mini-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 6px;
+  }
+
+  .weekday {
+    font-family: var(--mono);
+    font-size: 9px;
+    text-align: center;
+    color: var(--ink-dim);
+    letter-spacing: 0.12em;
+    padding: 8px 0;
+    text-transform: uppercase;
+  }
+
+  .weekday.shabbat { color: var(--accent-deep); }
+
+  .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+  }
+
+  .day {
+    font-family: var(--mono);
+    font-size: 13px;
+    text-align: center;
+    padding: 12px 0;
+    color: var(--ink);
+    border: 1px solid transparent;
+    transition: all 0.15s;
+    background: rgba(255, 255, 255, 0.015);
+    cursor: pointer;
+  }
+
+  .day:hover {
+    border-color: var(--line-strong);
+    background: rgba(212, 164, 86, 0.04);
+  }
+
+  .day.current {
+    border-color: var(--accent);
+    color: var(--accent-bright);
+    background: rgba(212, 164, 86, 0.10);
+    font-weight: 600;
+  }
+
+  .day.is-today-real {
+    box-shadow: inset 0 0 0 1px var(--accent);
+  }
+
+  .day.shabbat { color: var(--accent-deep); }
+
+  /* year overview */
+  .year-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
+    gap: 6px;
+    margin-bottom: 36px;
+  }
+
+  .month-tile {
+    background: var(--bg-elevated);
+    border: 1px solid var(--line);
+    padding: 14px 6px 12px;
+    text-align: center;
+    transition: all 0.15s;
+    cursor: pointer;
+  }
+
+  .month-tile:hover {
+    border-color: var(--line-strong);
+  }
+
+  .month-tile.current {
+    border-color: var(--accent);
+    background: rgba(212, 164, 86, 0.10);
+  }
+
+  .month-tile-num {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--ink-dim);
+    letter-spacing: 0.15em;
+  }
+
+  .month-tile-name {
+    font-family: var(--serif-he);
+    font-size: 13px;
+    margin-top: 4px;
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  .month-tile.current .month-tile-name {
+    color: var(--accent-bright);
+  }
+
+  .month-tile.sol { border-style: dashed; }
+
+  /* converter */
+  .converter {
+    background: var(--bg-elevated);
+    border: 1px solid var(--line);
+    padding: 22px;
+    margin-bottom: 28px;
+    position: relative;
+  }
+
+  .converter::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 12px;
+    height: 12px;
+    border-top: 1px solid var(--accent);
+    border-right: 1px solid var(--accent);
+  }
+  .converter::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: -1px;
+    width: 12px;
+    height: 12px;
+    border-bottom: 1px solid var(--accent);
+    border-left: 1px solid var(--accent);
+  }
+
+  .converter-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 22px;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .converter-subtitle {
+    font-family: var(--serif-he);
+    font-size: 13px;
+    color: var(--ink-dim);
+    margin-bottom: 16px;
+  }
+
+  .converter input[type="date"] {
+    background: var(--bg-input);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 14px;
+    padding: 12px 14px;
+    width: 100%;
+    outline: none;
+    color-scheme: dark;
+    direction: ltr;
+    text-align: left;
+  }
+
+  .converter input[type="date"]:focus { border-color: var(--accent); }
+
+  .converter-result {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line);
+  }
+
+  .converter-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dotted rgba(212, 164, 86, 0.10);
+  }
+
+  .converter-result-row:last-child { border-bottom: none; }
+
+  .converter-result-label {
+    font-family: var(--mono);
+    color: var(--ink-dim);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .converter-result-value {
+    font-family: var(--serif-he);
+    color: var(--ink);
+    font-size: 15px;
+    text-align: left;
+    direction: ltr;
+  }
+
+  .converter-result-value.primary {
+    color: var(--accent-bright);
+    font-size: 16px;
+  }
+
+  /* footer */
+  footer {
+    text-align: center;
+    margin-top: 48px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+  }
+
+  .footer-line {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .footer-line .dot {
+    color: var(--accent);
+    margin: 0 8px;
+  }
+
+  .footer-note {
+    font-family: var(--serif-he);
+    font-size: 12px;
+    color: var(--ink-dim);
+    margin-top: 10px;
+    line-height: 1.6;
+    max-width: 480px;
+    margin-inline: auto;
+  }
+
+  @media (max-width: 540px) {
+    .equivalents { grid-template-columns: 1fr; }
+    .day { font-size: 12px; padding: 10px 0; }
+    .weekday { font-size: 9px; }
+    .month-grid-title { font-size: 18px; }
+    .month-grid-title .he { font-size: 14px; }
+    .nav-btn { font-size: 12px; padding: 8px 11px; }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-1 { animation: fadeIn 0.7s ease 0.00s both; }
+  .fade-2 { animation: fadeIn 0.7s ease 0.10s both; }
+  .fade-3 { animation: fadeIn 0.7s ease 0.25s both; }
+  .fade-4 { animation: fadeIn 0.7s ease 0.40s both; }
+  .fade-5 { animation: fadeIn 0.7s ease 0.55s both; }
+  .fade-6 { animation: fadeIn 0.7s ease 0.70s both; }
+
+  .site-nav{display:flex;gap:6px;border-bottom:1px solid var(--line);padding-top:4px;margin-bottom:28px}
+  .site-nav a{padding:10px 22px;text-decoration:none;color:var(--ink-dim);border:1px solid transparent;border-bottom:0;font-size:15px}
+  .site-nav a[aria-current=page]{color:var(--ink);border-color:var(--line);background:var(--bg-elevated);font-weight:700}
+  .site-nav a:hover{color:var(--accent-bright)}
+  .site-nav a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+  .intro{background:var(--bg-elevated);border:1px solid var(--line);padding:22px 24px;margin:0 0 8px}
+  .intro h2{font-family:var(--serif-he);font-weight:700;font-size:22px;color:var(--accent-bright);margin-bottom:10px}
+  .intro p,.intro li{font-size:16px;line-height:1.75}
+  .intro ul{padding-inline-start:22px;margin:10px 0}
+  .intro li{margin-bottom:6px}
+  .intro .note{color:var(--ink-dim);font-size:14px;margin:10px 0 0}
+</style>
 </head>
-
 <body>
-  <div class="container">
+<div class="container">
 
-    <nav class="site-nav" aria-label="ניווט ראשי">
-      <a href="index.html">הצעה לרפורמה בבחירות</a>
-      <a href="calendar.html" aria-current="page">לוח שנה הולוצני</a>
-    </nav>
+  <nav class="site-nav" aria-label="ניווט ראשי">
+    <a href="index.html">הצעה לרפורמה בבחירות</a>
+    <a href="calendar.html" aria-current="page">לוח שנה הולוצני</a>
+  </nav>
 
-    <header class="fade-1">
-      <div class="brand">Holocene · IFC</div>
-      <div class="brand-sub">לוח השנה ההולוצני</div>
-    </header>
+  <header class="fade-1">
+    <div class="brand">Holocene · IFC</div>
+    <div class="brand-sub">לוח השנה ההולוצני</div>
+  </header>
 
-    <section class="today fade-2">
-      <div class="today-label" id="todayLabel">
-        <span class="live-dot"></span>
-        <span id="todayLabelText">TODAY · היום</span>
+  <section class="intro fade-1" aria-labelledby="introTitle">
+    <h2 id="introTitle">מה מוצג כאן, ומה מוצע</h2>
+    <p>העמוד מציג את התאריך של היום בלוח שנה הולוצני בעל 13 חודשים, לצד התאריך הגרגוריאני והעברי. אפשר לדפדף בין ימים וחודשים, וגם להמיר כל תאריך גרגוריאני. ההצעה:</p>
+    <ul>
+      <li><strong>שנה הולוצנית:</strong> השנה הגרגוריאנית ועוד 10,000 (היום 12026).</li>
+      <li><strong>13 חודשים של 28 ימים בדיוק,</strong> כלומר ארבעה שבועות שלמים. בין יוני ליולי נוסף חודש חדש: <strong>אתנחתא</strong>.</li>
+      <li><strong>כל חודש מתחיל ביום ראשון,</strong> ולכן כל תאריך נופל תמיד באותו יום בשבוע.</li>
+      <li><strong>שני ימים מחוץ למחזור השבוע:</strong> יום השנה (אחרי 28 בדצמבר) ויום העיבור (בין 28 ביוני ל-1 באתנחתא, רק בשנה מעוברת, כל 4 שנים).</li>
+    </ul>
+    <p class="note">היום בשבוע המוצג הוא היום לפי הלוח המוצע, ולא היום הגרגוריאני בפועל. זה לב ההצעה ולא תקלה.</p>
+  </section>
+
+  <section class="today fade-2">
+    <div class="today-label" id="todayLabel">
+      <span class="live-dot"></span>
+      <span id="todayLabelText">TODAY · היום</span>
+    </div>
+    <div class="today-month" id="todayMonth">—</div>
+    <div class="today-month-he" id="todayMonthHe"></div>
+    <div class="today-day" id="todayDay">—</div>
+    <div class="today-year"><span class="he-label">HE</span><span id="todayYear">—</span></div>
+    <div class="today-weekday" id="todayWeekday">—</div>
+
+    <div class="nav-controls">
+      <button class="nav-btn" onclick="navigate('month', -1)" title="חודש אחורה">
+        <span class="chev">‹‹</span><span>חודש</span>
+      </button>
+      <button class="nav-btn" onclick="navigate('day', -1)" title="יום אחורה">
+        <span class="chev">‹</span><span>יום</span>
+      </button>
+      <button class="nav-btn today-btn hidden" id="todayBtn" onclick="goToToday()">היום</button>
+      <button class="nav-btn" onclick="navigate('day', 1)" title="יום קדימה">
+        <span>יום</span><span class="chev">›</span>
+      </button>
+      <button class="nav-btn" onclick="navigate('month', 1)" title="חודש קדימה">
+        <span>חודש</span><span class="chev">››</span>
+      </button>
+    </div>
+  </section>
+
+  <div class="divider fade-3"><span>EQUIVALENTS · מקבילות</span></div>
+
+  <section class="equivalents fade-3">
+    <div class="equiv-card">
+      <div class="equiv-label">Gregorian</div>
+      <div class="equiv-value ltr" id="gregDate">—</div>
+    </div>
+    <div class="equiv-card">
+      <div class="equiv-label">תאריך עברי</div>
+      <div class="equiv-value" id="hebDate">—</div>
+    </div>
+  </section>
+
+  <section class="month-grid fade-4">
+    <div class="month-grid-header">
+      <div class="month-grid-title" id="monthGridTitle">—</div>
+      <div class="month-nav">
+        <button class="mini-btn" onclick="navigate('month', -1)" title="חודש קודם">‹</button>
+        <div class="month-grid-num" id="monthGridNum">—</div>
+        <button class="mini-btn" onclick="navigate('month', 1)" title="חודש הבא">›</button>
       </div>
-      <div class="today-month" id="todayMonth">—</div>
-      <div class="today-month-he" id="todayMonthHe"></div>
-      <div class="today-day" id="todayDay">—</div>
-      <div class="today-year"><span class="he-label">HE</span><span id="todayYear">—</span></div>
-      <div class="today-weekday" id="todayWeekday">—</div>
+    </div>
+    <div class="weekdays">
+      <div class="weekday">Sun</div>
+      <div class="weekday">Mon</div>
+      <div class="weekday">Tue</div>
+      <div class="weekday">Wed</div>
+      <div class="weekday">Thu</div>
+      <div class="weekday">Fri</div>
+      <div class="weekday shabbat">Sat</div>
+    </div>
+    <div class="days" id="daysGrid"></div>
+  </section>
 
-      <div class="nav-controls">
-        <button class="nav-btn" onclick="navigate('month', -1)" title="חודש אחורה">
-          <span class="chev">‹‹</span><span>חודש</span>
-        </button>
-        <button class="nav-btn" onclick="navigate('day', -1)" title="יום אחורה">
-          <span class="chev">‹</span><span>יום</span>
-        </button>
-        <button class="nav-btn today-btn hidden" id="todayBtn" onclick="goToToday()">היום</button>
-        <button class="nav-btn" onclick="navigate('day', 1)" title="יום קדימה">
-          <span>יום</span><span class="chev">›</span>
-        </button>
-        <button class="nav-btn" onclick="navigate('month', 1)" title="חודש קדימה">
-          <span>חודש</span><span class="chev">››</span>
-        </button>
-      </div>
-    </section>
+  <div class="divider fade-5"><span>YEAR · 13 MONTHS · שנה</span></div>
 
-    <div class="divider fade-3"><span>EQUIVALENTS · מקבילות</span></div>
+  <section class="year-overview fade-5" id="yearOverview"></section>
 
-    <section class="equivalents fade-3">
-      <div class="equiv-card">
-        <div class="equiv-label">Gregorian</div>
-        <div class="equiv-value ltr" id="gregDate">—</div>
-      </div>
-      <div class="equiv-card">
-        <div class="equiv-label">תאריך עברי</div>
-        <div class="equiv-value" id="hebDate">—</div>
-      </div>
-    </section>
+  <section class="converter fade-6">
+    <div class="converter-title">Convert</div>
+    <div class="converter-subtitle">המרת תאריך גרגוריאני ללוח החדש ולעברי</div>
+    <input type="date" id="convertInput">
+    <div class="converter-result" id="convertResult"></div>
+  </section>
 
-    <section class="month-grid fade-4">
-      <div class="month-grid-header">
-        <div class="month-grid-title" id="monthGridTitle">—</div>
-        <div class="month-nav">
-          <button class="mini-btn" onclick="navigate('month', -1)" title="חודש קודם">‹</button>
-          <div class="month-grid-num" id="monthGridNum">—</div>
-          <button class="mini-btn" onclick="navigate('month', 1)" title="חודש הבא">›</button>
-        </div>
-      </div>
-      <div class="weekdays">
-        <div class="weekday">Sun</div>
-        <div class="weekday">Mon</div>
-        <div class="weekday">Tue</div>
-        <div class="weekday">Wed</div>
-        <div class="weekday">Thu</div>
-        <div class="weekday">Fri</div>
-        <div class="weekday shabbat">Sat</div>
-      </div>
-      <div class="days" id="daysGrid"></div>
-    </section>
+  <footer class="fade-6">
+    <div class="footer-line">
+      <span>bekulio</span><span class="dot">·</span><span id="footerYear">12026</span><span class="dot">·</span><span>HE</span>
+    </div>
+    <div class="footer-note">
+      13 חודשים של 28 ימים. יום השנה בסוף השנה ויום העיבור באמצעה אינם שייכים לאף יום בשבוע. כל חודש מתחיל ביום ראשון.
+    </div>
+  </footer>
 
-    <div class="divider fade-5"><span>YEAR · 13 MONTHS · שנה</span></div>
+</div>
 
-    <section class="year-overview fade-5" id="yearOverview"></section>
+<script>
+  const MONTHS_EN = ['January','February','March','April','May','June','Atnahta','July','August','September','October','November','December'];
+  const MONTHS_HE = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','אתנחתא','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+  const WEEKDAYS_HE = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
 
-    <section class="converter fade-6">
-      <div class="converter-title">Convert</div>
-      <div class="converter-subtitle">המרת תאריך גרגוריאני ללוח החדש ולעברי</div>
-      <input type="date" id="convertInput">
-      <div class="converter-result" id="convertResult"></div>
-    </section>
+  let viewedDate = new Date();
+  viewedDate.setHours(12, 0, 0, 0); // noon to avoid DST surprises
 
-    <footer class="fade-6">
-      <div class="footer-line">
-        <span>bekulio</span><span class="dot">·</span><span id="footerYear">12026</span><span
-          class="dot">·</span><span>HE</span>
-      </div>
-      <div class="footer-note">
-        13 חודשים של 28 ימים. יום השנה בסוף השנה ויום העיבור באמצעה אינם שייכים לאף יום בשבוע. כל חודש מתחיל ביום ראשון.
-      </div>
-    </footer>
+  function isLeapYear(y) { return y % 4 === 0; }
 
-  </div>
+  function dayOfYear(date) {
+    const start = Date.UTC(date.getFullYear(), 0, 1);
+    const current = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+    return Math.floor((current - start) / 86400000) + 1;
+  }
 
-  <script>
-    const MONTHS_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'Atnahta', 'July', 'August', 'September', 'October', 'November', 'December'];
-    const MONTHS_HE = ['ינואר', 'פברואר', 'מרץ', 'אפריל', 'מאי', 'יוני', 'אתנחתא', 'יולי', 'אוגוסט', 'ספטמבר', 'אוקטובר', 'נובמבר', 'דצמבר'];
-    const WEEKDAYS_HE = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי', 'שבת'];
+  function gregToIFC(date) {
+    const gregYear = date.getFullYear();
+    const ifcYear = gregYear + 10000;
+    const doy = dayOfYear(date);
+    const leap = isLeapYear(gregYear);
+    const yearLength = leap ? 366 : 365;
 
-    let viewedDate = new Date();
-    viewedDate.setHours(12, 0, 0, 0); // noon to avoid DST surprises
+    if (doy === yearLength) return { year: ifcYear, monthIndex: null, day: null, special: 'year' };
+    if (leap && doy === 169) return { year: ifcYear, monthIndex: null, day: null, special: 'leap' };
 
-    function isLeapYear(y) { return y % 4 === 0; }
+    let adjusted = doy;
+    if (leap && doy > 169) adjusted -= 1;
 
-    function dayOfYear(date) {
-      const start = Date.UTC(date.getFullYear(), 0, 1);
-      const current = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
-      return Math.floor((current - start) / 86400000) + 1;
-    }
+    const monthIndex = Math.floor((adjusted - 1) / 28);
+    const day = ((adjusted - 1) % 28) + 1;
+    return { year: ifcYear, monthIndex, day, special: null };
+  }
 
-    function gregToIFC(date) {
-      const gregYear = date.getFullYear();
-      const ifcYear = gregYear + 10000;
-      const doy = dayOfYear(date);
-      const leap = isLeapYear(gregYear);
-      const yearLength = leap ? 366 : 365;
+  function ifcToGreg(ifcYear, monthIndex, day) {
+    const gregYear = ifcYear - 10000;
+    const leap = isLeapYear(gregYear);
+    let doy = monthIndex * 28 + day;
+    if (leap && monthIndex >= 6) doy += 1; // skip past leap day insertion
+    const d = new Date(gregYear, 0, doy);
+    d.setHours(12, 0, 0, 0);
+    return d;
+  }
 
-      if (doy === yearLength) return { year: ifcYear, monthIndex: null, day: null, special: 'year' };
-      if (leap && doy === 169) return { year: ifcYear, monthIndex: null, day: null, special: 'leap' };
-
-      let adjusted = doy;
-      if (leap && doy > 169) adjusted -= 1;
-
-      const monthIndex = Math.floor((adjusted - 1) / 28);
-      const day = ((adjusted - 1) % 28) + 1;
-      return { year: ifcYear, monthIndex, day, special: null };
-    }
-
-    function ifcToGreg(ifcYear, monthIndex, day) {
-      const gregYear = ifcYear - 10000;
-      const leap = isLeapYear(gregYear);
-      let doy = monthIndex * 28 + day;
-      if (leap && monthIndex >= 6) doy += 1; // skip past leap day insertion
-      const d = new Date(gregYear, 0, doy);
-      d.setHours(12, 0, 0, 0);
-      return d;
-    }
-
-    function getHebrewDate(date) {
-      try {
-        return new Intl.DateTimeFormat('he-u-ca-hebrew', {
-          day: 'numeric', month: 'long', year: 'numeric'
-        }).format(date);
-      } catch (e) { return '—'; }
-    }
-
-    function getGregorianFormatted(date) {
-      return new Intl.DateTimeFormat('en-GB', {
+  function getHebrewDate(date) {
+    try {
+      return new Intl.DateTimeFormat('he-u-ca-hebrew', {
         day: 'numeric', month: 'long', year: 'numeric'
       }).format(date);
-    }
+    } catch (e) { return '—'; }
+  }
 
-    function weekdayName(day) { return WEEKDAYS_HE[(day - 1) % 7]; }
-    function weekdayIndex(day) { return (day - 1) % 7; }
+  function getGregorianFormatted(date) {
+    return new Intl.DateTimeFormat('en-GB', {
+      day: 'numeric', month: 'long', year: 'numeric'
+    }).format(date);
+  }
 
-    function isSameDay(a, b) {
-      return a.getFullYear() === b.getFullYear() &&
-        a.getMonth() === b.getMonth() &&
-        a.getDate() === b.getDate();
-    }
+  function weekdayName(day) { return WEEKDAYS_HE[(day - 1) % 7]; }
+  function weekdayIndex(day) { return (day - 1) % 7; }
 
-    function navigate(unit, direction) {
-      const ifc = gregToIFC(viewedDate);
+  function isSameDay(a, b) {
+    return a.getFullYear() === b.getFullYear() &&
+           a.getMonth() === b.getMonth() &&
+           a.getDate() === b.getDate();
+  }
 
-      if (unit === 'day') {
-        const d = new Date(viewedDate);
-        d.setDate(d.getDate() + direction);
-        viewedDate = d;
-      } else if (unit === 'month') {
-        if (ifc.special) {
-          // from special day, approximate ±28 days
-          const d = new Date(viewedDate);
-          d.setDate(d.getDate() + direction * 28);
-          viewedDate = d;
-        } else {
-          let targetMonth = ifc.monthIndex + direction;
-          let targetYear = ifc.year;
-          let targetDay = ifc.day;
-          if (targetMonth > 12) { targetMonth = 0; targetYear += 1; }
-          if (targetMonth < 0) { targetMonth = 12; targetYear -= 1; }
-          viewedDate = ifcToGreg(targetYear, targetMonth, targetDay);
-        }
-      }
-      render();
-    }
+  function navigate(unit, direction) {
+    const ifc = gregToIFC(viewedDate);
 
-    function goToToday() {
-      viewedDate = new Date();
-      viewedDate.setHours(12, 0, 0, 0);
-      render();
-    }
-
-    function jumpToDate(date) {
-      viewedDate = new Date(date);
-      viewedDate.setHours(12, 0, 0, 0);
-      render();
-    }
-
-    function render() {
-      const ifc = gregToIFC(viewedDate);
-      const now = new Date();
-      const isToday = isSameDay(viewedDate, now);
-      const realToday = gregToIFC(now);
-
-      // hero label
-      const labelEl = document.getElementById('todayLabel');
-      const labelTextEl = document.getElementById('todayLabelText');
-      if (isToday) {
-        labelEl.classList.remove('viewing');
-        labelTextEl.textContent = 'TODAY · היום';
-      } else {
-        labelEl.classList.add('viewing');
-        labelTextEl.textContent = 'VIEWING · בתצוגה';
-      }
-
-      // today button
-      document.getElementById('todayBtn').classList.toggle('hidden', isToday);
-
-      const monthEl = document.getElementById('todayMonth');
-      const monthHeEl = document.getElementById('todayMonthHe');
-      const dayEl = document.getElementById('todayDay');
-      const yearEl = document.getElementById('todayYear');
-      const wdEl = document.getElementById('todayWeekday');
-
-      dayEl.classList.remove('special');
-
-      if (ifc.special === 'year') {
-        monthEl.textContent = 'Year Day';
-        monthHeEl.textContent = 'יום השנה';
-        dayEl.textContent = '★';
-        dayEl.classList.add('special');
-        wdEl.textContent = 'יום חג — לא שייך לחודש או ליום בשבוע';
-      } else if (ifc.special === 'leap') {
-        monthEl.textContent = 'Leap Day';
-        monthHeEl.textContent = 'יום העיבור';
-        dayEl.textContent = '✦';
-        dayEl.classList.add('special');
-        wdEl.textContent = 'יום חג — מופיע רק בשנה מעוברת';
-      } else {
-        monthEl.textContent = MONTHS_EN[ifc.monthIndex];
-        monthHeEl.textContent = MONTHS_HE[ifc.monthIndex];
-        dayEl.textContent = ifc.day;
-        wdEl.textContent = 'יום ' + weekdayName(ifc.day);
-      }
-
-      yearEl.textContent = ifc.year;
-      document.getElementById('footerYear').textContent = realToday.year;
-
-      document.getElementById('gregDate').textContent = getGregorianFormatted(viewedDate);
-      document.getElementById('hebDate').textContent = getHebrewDate(viewedDate);
-
-      renderMonth(ifc, realToday);
-      renderYearOverview(ifc);
-    }
-
-    function renderMonth(ifc, realToday) {
-      const titleEl = document.getElementById('monthGridTitle');
-      const numEl = document.getElementById('monthGridNum');
-      const gridEl = document.getElementById('daysGrid');
-
+    if (unit === 'day') {
+      const d = new Date(viewedDate);
+      d.setDate(d.getDate() + direction);
+      viewedDate = d;
+    } else if (unit === 'month') {
       if (ifc.special) {
-        titleEl.innerHTML = (ifc.special === 'year' ? 'Year Day' : 'Leap Day') +
-          ' <span class="he">' + (ifc.special === 'year' ? 'יום השנה' : 'יום העיבור') + '</span>';
-        numEl.textContent = 'INTER';
-        gridEl.innerHTML = '<div style="grid-column: 1 / -1; padding: 32px 0; text-align: center; font-family: var(--serif-he); color: var(--ink-dim); font-size: 14px;">יום בודד מחוץ למחזור</div>';
-        return;
+        // from special day, approximate ±28 days
+        const d = new Date(viewedDate);
+        d.setDate(d.getDate() + direction * 28);
+        viewedDate = d;
+      } else {
+        let targetMonth = ifc.monthIndex + direction;
+        let targetYear = ifc.year;
+        let targetDay = ifc.day;
+        if (targetMonth > 12) { targetMonth = 0; targetYear += 1; }
+        if (targetMonth < 0) { targetMonth = 12; targetYear -= 1; }
+        viewedDate = ifcToGreg(targetYear, targetMonth, targetDay);
       }
+    }
+    render();
+  }
 
-      titleEl.innerHTML = MONTHS_EN[ifc.monthIndex] + ' <span class="he">' + MONTHS_HE[ifc.monthIndex] + '</span>';
-      numEl.textContent = String(ifc.monthIndex + 1).padStart(2, '0') + '/13';
+  function goToToday() {
+    viewedDate = new Date();
+    viewedDate.setHours(12, 0, 0, 0);
+    render();
+  }
 
-      gridEl.innerHTML = '';
-      for (let d = 1; d <= 28; d++) {
-        const cell = document.createElement('div');
-        cell.className = 'day';
-        if (weekdayIndex(d) === 6) cell.classList.add('shabbat');
-        if (d === ifc.day) cell.classList.add('current');
-        // mark real "today" if it falls in this viewed month
-        if (!realToday.special &&
+  function jumpToDate(date) {
+    viewedDate = new Date(date);
+    viewedDate.setHours(12, 0, 0, 0);
+    render();
+  }
+
+  function render() {
+    const ifc = gregToIFC(viewedDate);
+    const now = new Date();
+    const isToday = isSameDay(viewedDate, now);
+    const realToday = gregToIFC(now);
+
+    // hero label
+    const labelEl = document.getElementById('todayLabel');
+    const labelTextEl = document.getElementById('todayLabelText');
+    if (isToday) {
+      labelEl.classList.remove('viewing');
+      labelTextEl.textContent = 'TODAY · היום';
+    } else {
+      labelEl.classList.add('viewing');
+      labelTextEl.textContent = 'VIEWING · בתצוגה';
+    }
+
+    // today button
+    document.getElementById('todayBtn').classList.toggle('hidden', isToday);
+
+    const monthEl = document.getElementById('todayMonth');
+    const monthHeEl = document.getElementById('todayMonthHe');
+    const dayEl = document.getElementById('todayDay');
+    const yearEl = document.getElementById('todayYear');
+    const wdEl = document.getElementById('todayWeekday');
+
+    dayEl.classList.remove('special');
+
+    if (ifc.special === 'year') {
+      monthEl.textContent = 'Year Day';
+      monthHeEl.textContent = 'יום השנה';
+      dayEl.textContent = '★';
+      dayEl.classList.add('special');
+      wdEl.textContent = 'יום חג — לא שייך לחודש או ליום בשבוע';
+    } else if (ifc.special === 'leap') {
+      monthEl.textContent = 'Leap Day';
+      monthHeEl.textContent = 'יום העיבור';
+      dayEl.textContent = '✦';
+      dayEl.classList.add('special');
+      wdEl.textContent = 'יום חג — מופיע רק בשנה מעוברת';
+    } else {
+      monthEl.textContent = MONTHS_EN[ifc.monthIndex];
+      monthHeEl.textContent = MONTHS_HE[ifc.monthIndex];
+      dayEl.textContent = ifc.day;
+      wdEl.textContent = 'יום ' + weekdayName(ifc.day);
+    }
+
+    yearEl.textContent = ifc.year;
+    document.getElementById('footerYear').textContent = realToday.year;
+
+    document.getElementById('gregDate').textContent = getGregorianFormatted(viewedDate);
+    document.getElementById('hebDate').textContent = getHebrewDate(viewedDate);
+
+    renderMonth(ifc, realToday);
+    renderYearOverview(ifc);
+  }
+
+  function renderMonth(ifc, realToday) {
+    const titleEl = document.getElementById('monthGridTitle');
+    const numEl = document.getElementById('monthGridNum');
+    const gridEl = document.getElementById('daysGrid');
+
+    if (ifc.special) {
+      titleEl.innerHTML = (ifc.special === 'year' ? 'Year Day' : 'Leap Day') +
+                         ' <span class="he">' + (ifc.special === 'year' ? 'יום השנה' : 'יום העיבור') + '</span>';
+      numEl.textContent = 'INTER';
+      gridEl.innerHTML = '<div style="grid-column: 1 / -1; padding: 32px 0; text-align: center; font-family: var(--serif-he); color: var(--ink-dim); font-size: 14px;">יום בודד מחוץ למחזור</div>';
+      return;
+    }
+
+    titleEl.innerHTML = MONTHS_EN[ifc.monthIndex] + ' <span class="he">' + MONTHS_HE[ifc.monthIndex] + '</span>';
+    numEl.textContent = String(ifc.monthIndex + 1).padStart(2, '0') + '/13';
+
+    gridEl.innerHTML = '';
+    for (let d = 1; d <= 28; d++) {
+      const cell = document.createElement('div');
+      cell.className = 'day';
+      if (weekdayIndex(d) === 6) cell.classList.add('shabbat');
+      if (d === ifc.day) cell.classList.add('current');
+      // mark real "today" if it falls in this viewed month
+      if (!realToday.special &&
           realToday.year === ifc.year &&
           realToday.monthIndex === ifc.monthIndex &&
           realToday.day === d &&
           d !== ifc.day) {
-          cell.classList.add('is-today-real');
-        }
-        cell.textContent = String(d).padStart(2, '0');
-        cell.onclick = () => {
-          const newDate = ifcToGreg(ifc.year, ifc.monthIndex, d);
-          jumpToDate(newDate);
-        };
-        gridEl.appendChild(cell);
+        cell.classList.add('is-today-real');
       }
+      cell.textContent = String(d).padStart(2, '0');
+      cell.onclick = () => {
+        const newDate = ifcToGreg(ifc.year, ifc.monthIndex, d);
+        jumpToDate(newDate);
+      };
+      gridEl.appendChild(cell);
     }
+  }
 
-    function renderYearOverview(ifc) {
-      const container = document.getElementById('yearOverview');
-      container.innerHTML = '';
-      for (let i = 0; i < 13; i++) {
-        const tile = document.createElement('div');
-        tile.className = 'month-tile';
-        if (!ifc.special && ifc.monthIndex === i) tile.classList.add('current');
+  function renderYearOverview(ifc) {
+    const container = document.getElementById('yearOverview');
+    container.innerHTML = '';
+    for (let i = 0; i < 13; i++) {
+      const tile = document.createElement('div');
+      tile.className = 'month-tile';
+      if (!ifc.special && ifc.monthIndex === i) tile.classList.add('current');
         if (i === 6) tile.classList.add('atnahta'); // Atnahta month
-        tile.innerHTML =
-          '<div class="month-tile-num">' + String(i + 1).padStart(2, '0') + '</div>' +
-          '<div class="month-tile-name">' + MONTHS_HE[i] + '</div>';
-        tile.onclick = () => {
-          const targetYear = ifc.special ? (ifc.year) : ifc.year;
-          const targetDay = (ifc.special || ifc.day > 28) ? 1 : ifc.day;
-          jumpToDate(ifcToGreg(targetYear, i, targetDay));
-        };
-        container.appendChild(tile);
-      }
+      tile.innerHTML =
+        '<div class="month-tile-num">' + String(i + 1).padStart(2, '0') + '</div>' +
+        '<div class="month-tile-name">' + MONTHS_HE[i] + '</div>';
+      tile.onclick = () => {
+        const targetYear = ifc.special ? (ifc.year) : ifc.year;
+        const targetDay = (ifc.special || ifc.day > 28) ? 1 : ifc.day;
+        jumpToDate(ifcToGreg(targetYear, i, targetDay));
+      };
+      container.appendChild(tile);
     }
+  }
 
-    function setupConverter() {
-      const input = document.getElementById('convertInput');
-      const result = document.getElementById('convertResult');
+  function setupConverter() {
+    const input = document.getElementById('convertInput');
+    const result = document.getElementById('convertResult');
 
-      const today = new Date();
-      const pad = (n) => String(n).padStart(2, '0');
-      input.value = today.getFullYear() + '-' + pad(today.getMonth() + 1) + '-' + pad(today.getDate());
+    const today = new Date();
+    const pad = (n) => String(n).padStart(2, '0');
+    input.value = today.getFullYear() + '-' + pad(today.getMonth() + 1) + '-' + pad(today.getDate());
 
-      function update() {
-        const val = input.value;
-        if (!val) { result.innerHTML = ''; return; }
-        const [y, m, d] = val.split('-').map(Number);
-        const date = new Date(y, m - 1, d);
-        const ifc = gregToIFC(date);
+    function update() {
+      const val = input.value;
+      if (!val) { result.innerHTML = ''; return; }
+      const [y, m, d] = val.split('-').map(Number);
+      const date = new Date(y, m - 1, d);
+      const ifc = gregToIFC(date);
 
-        let ifcStr;
-        if (ifc.special === 'year') ifcStr = 'יום השנה · ' + ifc.year + ' HE';
-        else if (ifc.special === 'leap') ifcStr = 'יום העיבור · ' + ifc.year + ' HE';
-        else ifcStr = ifc.day + ' ' + MONTHS_HE[ifc.monthIndex] + ' ' + ifc.year + ' HE';
+      let ifcStr;
+      if (ifc.special === 'year') ifcStr = 'יום השנה · ' + ifc.year + ' HE';
+      else if (ifc.special === 'leap') ifcStr = 'יום העיבור · ' + ifc.year + ' HE';
+      else ifcStr = ifc.day + ' ' + MONTHS_HE[ifc.monthIndex] + ' ' + ifc.year + ' HE';
 
-        result.innerHTML =
-          '<div class="converter-result-row">' +
+      result.innerHTML =
+        '<div class="converter-result-row">' +
           '<div class="converter-result-label">IFC</div>' +
           '<div class="converter-result-value primary">' + ifcStr + '</div>' +
-          '</div>' +
-          '<div class="converter-result-row">' +
+        '</div>' +
+        '<div class="converter-result-row">' +
           '<div class="converter-result-label">GREG</div>' +
           '<div class="converter-result-value">' + getGregorianFormatted(date) + '</div>' +
-          '</div>' +
-          '<div class="converter-result-row">' +
+        '</div>' +
+        '<div class="converter-result-row">' +
           '<div class="converter-result-label">HEB</div>' +
           '<div class="converter-result-value">' + getHebrewDate(date) + '</div>' +
-          '</div>';
-      }
-
-      input.addEventListener('change', update);
-      input.addEventListener('input', update);
-      update();
+        '</div>';
     }
 
-    // keyboard nav
-    document.addEventListener('keydown', (e) => {
-      if (e.target.tagName === 'INPUT') return;
-      if (e.key === 'ArrowRight') { navigate('day', -1); e.preventDefault(); }
-      else if (e.key === 'ArrowLeft') { navigate('day', 1); e.preventDefault(); }
-      else if (e.key === 'ArrowUp') { navigate('month', -1); e.preventDefault(); }
-      else if (e.key === 'ArrowDown') { navigate('month', 1); e.preventDefault(); }
-      else if (e.key === 't' || e.key === 'T' || e.key === 'ה') { goToToday(); e.preventDefault(); }
-    });
+    input.addEventListener('change', update);
+    input.addEventListener('input', update);
+    update();
+  }
 
-    render();
-    setupConverter();
-  </script>
+  // keyboard nav
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT') return;
+    if (e.key === 'ArrowRight') { navigate('day', -1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft') { navigate('day', 1); e.preventDefault(); }
+    else if (e.key === 'ArrowUp') { navigate('month', -1); e.preventDefault(); }
+    else if (e.key === 'ArrowDown') { navigate('month', 1); e.preventDefault(); }
+    else if (e.key === 't' || e.key === 'T' || e.key === 'ה') { goToToday(); e.preventDefault(); }
+  });
+
+  render();
+  setupConverter();
+</script>
 </body>
-
 </html>
